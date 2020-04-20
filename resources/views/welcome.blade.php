@@ -1,23 +1,18 @@
-@extends('layouts.app', ['title' => 'Welcome'])
+@extends('layouts.app', ['title' => $game->game])
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
 
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
+
+<div class="grid grid-cols-2 gap-4 my-8">
+    @foreach($game->players as $player)
+    <livewire:player :player="$player" :key="$loop->index" />
+    @endforeach
 </div>
+
+{{-- <div class="grid grid-cols-12 gap-4">
+    @foreach($game->deck->cards as $card)
+    <x-card :card="$card" :key="$loop->index" />
+    @endforeach
+</div> --}}
 @endsection

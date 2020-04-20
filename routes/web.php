@@ -14,9 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        'game' => new App\Game([
+            ['name' => 'Andy'],
+            ['name' => 'Dan'],
+            ['name' => 'Becca'],
+            ['name' => 'Pam'],
+            ['name' => 'Jess'],
+        ]),
+    ]);
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/games/start', 'GamesController@create');
