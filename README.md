@@ -33,20 +33,21 @@ A run (abbreviated as ‘R’) on the other hand is a sequence of four or more c
 For example, 4 ♣ – 5 ♣ – 6 ♣ – 7 ♣ .
 
 In case of a run, aces can be either high or low, but not both.
+
 For instance, the correct combinations are:
-A ♣ – 2 ♣ – 3 ♣ – 4 ♣ (when the ace is considered low) or
-J ♠ – K ♠ – Q ♠ – A ♠ (when the ace is considered high)
+A ♣ – 2 ♣ – 3 ♣ – 4 ♣ (when the ace is considered low) or  
+J ♠ – K ♠ – Q ♠ – A ♠ (when the ace is considered high)  
 However, Q ♣ – K ♣- A ♣- 2 ♣ is not allowed.
 
 
-- 7 rounds
-  - Round 1: 6 cards dealt, goal is two sets of three
-  - Round 2: 7 cards dealt, goal is one set of three and one run of four
-  - Round 3: 8 cards dealt, goal is two runs of four
-  - Round 4: 9 cards dealt, goal is three sets of three
-  - Round 5: 10 cards dealt, goal is two sets of three and one run of four
-  - Round 6: 11 cards dealt, goal is one set of three and two runs of four
-  - Round 7: 12 cards dealt, goal is three sets of four
+7 rounds
+- Round 1: 6 cards dealt, goal is two sets of three
+- Round 2: 7 cards dealt, goal is one set of three and one run of four
+- Round 3: 8 cards dealt, goal is two runs of four
+- Round 4: 9 cards dealt, goal is three sets of three
+- Round 5: 10 cards dealt, goal is two sets of three and one run of four
+- Round 6: 11 cards dealt, goal is one set of three and two runs of four
+- Round 7: 12 cards dealt, goal is three sets of four
 
 #### Beginning Play
 
