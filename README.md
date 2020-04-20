@@ -1,78 +1,84 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+## About Card Party
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+My family's favorite past-time when we're all together is to play cards. Most of the time we play Progressive Rummy (also known as Liverpool) but we also play spades, hearts, and someothers as well. Recently I've been looking for a good way for us to play together virtually, and while there are options for other card games, there wasn't one that I could find for Progressive. Thus this project.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Goals/Thought Dump
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Goal: To play a game of progressive rummy with my family in real time
+- Thought: Joining should be like joining a zoom call or JackBok Game
+  - Organizer creates game gets unique link to send to group and group joins and enters in info
+  - OR Organizer creates game with players and sends link to group
+- Don't want in-game chat - there are plenty of other ways to communicate during a game and reinventing the wheel isn't fun
+- Automatic scoring
+- For starters get working for experienced players, then add validation for actions, then add "house-rules" configurations
+- Start off with progressive rummy, then expand to other game options
 
-## Learning Laravel
+### How the Swicks Play Progressive Rummy
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### What You Will Need
+The game requires two decks of cards with jokers for every two players. I.e. if four players 2 full decks, if five 3 full decks
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Prerequisites
 
-## Laravel Sponsors
+The basic object of the game is to form melds or card combinations on every new deal, which are previously determined. The player to successfully form the expected meld and lay off all of his/her cards first, wins the respective round. At the end of the game’s seven rounds, the player with the least cumulative score wins the game.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+There are two types of melds in Progressive Rummy: ‘Sets’, and ‘Runs’.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
-- [云软科技](http://www.yunruan.ltd/)
+A set (abbreviated as ‘S’) is a combination of three or more cards of the same numer where the suit does not matter.
+For example, 5 ♥ – 5 ♠ – 5 ♦.
+
+A run (abbreviated as ‘R’) on the other hand is a sequence of four or more consecutive cards all of the same suit
+For example, 4 ♣ – 5 ♣ – 6 ♣ – 7 ♣ .
+
+In case of a run, aces can be either high or low, but not both.
+For instance, the correct combinations are:
+A ♣ – 2 ♣ – 3 ♣ – 4 ♣ (when the ace is considered low) or
+J ♠ – K ♠ – Q ♠ – A ♠ (when the ace is considered high)
+However, Q ♣ – K ♣- A ♣- 2 ♣ is not allowed.
+
+
+- 7 rounds
+  - Round 1: 6 cards dealt, goal is two sets of three
+  - Round 2: 7 cards dealt, goal is one set of three and one run of four
+  - Round 3: 8 cards dealt, goal is two runs of four
+  - Round 4: 9 cards dealt, goal is three sets of three
+  - Round 5: 10 cards dealt, goal is two sets of three and one run of four
+  - Round 6: 11 cards dealt, goal is one set of three and two runs of four
+  - Round 7: 12 cards dealt, goal is three sets of four
+
+#### Beginning Play
+
+- Shuffle the decks of cards, and deal each player 6 cards to begin the first round.
+- Place the rest of the deck in the center and flip the top card; the deck would be used as the draw pile, and the flipped card would begin a discard pile.
+- The player to the left of the dealer starts by picking up a card from either the draw or discard pile. They would then try to use it in their hand, and discard a less useful card from their hand.
+- The game continues in a similar fashion, where players draw and discard in an attempt to complete the round's goal. Once a player is successful in forming the goal, they would lay it down on the table.
+  - After a player lays their cards on the table if they have any cards left (which they only would if they bought at some point in the round), they can play them on other players who have also laid down cards. NOTE: a player who _has not_ laid down cannot play on other player's hands.
+- Jokers are used as a wild card, and have the ability to replace any missing card in a particular sequence.
+- The round ends when a player discards their last card.
+- At the end of each round, players keep a score of the cards that remain in their hand. The point value for each card is given below.
+
+| Cards  | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | J  | Q  | K  | A  | Joker |
+|--------|---|---|---|---|---|---|---|---|----|----|----|----|----|-------|
+| Points | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 5 | 10 | 10 | 10 | 10 | 15 | 25    |
+
+#### Buying
+
+You can pick up a card out of turn by "buying" it for the price of picking up two extra cards. Any discarded card is first offered to the player to the left, if they don't want it the remaining players _in order_ have the option to "buy" it.
+
+For example lets say there are four players: Dan, Pam, Andy, and Becca. Dan discarded a seven of hearts and Becca says she wants the card.
+
+If Pam wants the seven of hearts, she can pick it up without picking up extra cards, even though Becca wants it.
+Then Andy gets the option to buy it, then if Andy doesn't want it Becca can pick up the seven of hearts and then also must pick up the top two cards off of the deck.
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Thank you for considering contributing to Card Party! Please reach out to me on twitter (@andymswick) or send me an email (andymswick@gmail.com) and we can discuss more.
 
 ## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within Card Party, please send an e-mail to Andy Swick via [andymswick@gmail.com](mailto:andymswick@gmail.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
