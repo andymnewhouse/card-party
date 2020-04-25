@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
-use App\Models\GameType;
+use App\Game;
 
 class GamesController extends Controller
 {

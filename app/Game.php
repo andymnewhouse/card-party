@@ -4,16 +4,14 @@ namespace App;
 
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Spatie\SchemalessAttributes\SchemalessAttributes;
 
 class Game extends Model
 {
     protected $guarded = [];
 
     public $casts = [
-        'hands' => 'array',
-        'players' => 'array',
+        'hands' => 'collection',
+        'players' => 'collection',
     ];
 
     public static function start($type, $playerNames) {
@@ -43,14 +41,12 @@ class Game extends Model
         ]);
     }
 
-    public function getHandsAttribute(): SchemalessAttributes
-    {
-        return SchemalessAttributes::createForModel($this, 'hands');
+    public function game_type() {
+        return $this->belongsTo(GameType::class);
     }
-    
-    public function getPlayersAttribute(): SchemalessAttributes
-    {
-        return SchemalessAttributes::createForModel($this, 'players');
+
+    public function users() {
+        return $this->belongsToMany(User::class);
     }
 
     public function getPlayLinkAttribute() {
@@ -59,16 +55,6 @@ class Game extends Model
 
     public function getSetupLinkAttribute() {
         return route('games.setup', Hashids::encode($this->id));
-    }
-
-    public function scopeWithHands(): Builder
-    {
-        return SchemalessAttributes::scopeWithSchemalessAttributes('hands');
-    }
-    
-    public function scopeWithPlayers(): Builder
-    {
-        return SchemalessAttributes::scopeWithSchemalessAttributes('players');
     }
 
     private function deal($hand, $numberOfCards)
@@ -85,7 +71,7 @@ class Game extends Model
     private function getPlayers($names) {
         $players = [];
         foreach($names as $name) {
-            $players[] = ['name' => $name, 'device' => null, 'icon' => null];
+            $players[] = ['name' => $name, 'user_id' => null, 'icon' => null];
         }
 
         return $players;

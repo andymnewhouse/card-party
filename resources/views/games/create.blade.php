@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="h-full flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-    <livewire:game-start />
+    <livewire:games.start />
 </div>
 @endsection

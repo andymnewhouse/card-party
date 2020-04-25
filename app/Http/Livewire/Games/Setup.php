@@ -18,7 +18,14 @@ class Setup extends Component
     }
 
     public function choose($playerIndex) {
-        dd(request());
-        dd($this->game->players[$playerIndex]);
+        $this->game->users()->syncWithoutDetaching([auth()->id()]);
+    
+        $player = $this->game->players[$playerIndex];
+        $player['user_id'] = auth()->id();
+        $players = $this->game->players;
+        $players[$playerIndex] = $player;
+        
+        $this->game->players = $players;
+        $this->game->save();
     }
 }
