@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -20,7 +21,7 @@
 
 <body class="h-screen bg-gray-100">
     <div id="app">
-        {{-- @include('layouts.partials.nav') --}}
+        @include('layouts.partials.nav')
 
         @include('layouts.partials.header')
         <main>

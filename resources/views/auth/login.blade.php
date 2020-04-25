@@ -4,7 +4,7 @@
 
 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <form action="{{ route('register') }}" method="POST">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
             <div>
                 <label for="email" class="form-label">
@@ -14,6 +14,12 @@
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                         class="form-control @error('email') border-red-500 @enderror" />
                 </div>
+
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
 
             <div class="mt-6">
@@ -24,6 +30,12 @@
                     <input id="password" type="password" name="password" required autocomplete="new-password"
                         class="form-control @error('password') border-red-500 @enderror" />
                 </div>
+
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
             </div>
 
             <div class="mt-6 flex items-center justify-between">
