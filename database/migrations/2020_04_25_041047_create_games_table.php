@@ -17,6 +17,8 @@ class CreateGamesTable extends Migration
             $table->id();
             $table->unsignedInteger('game_type_id');
             $table->unsignedInteger('num_players');
+            $table->schemalessAttributes('hands');
+            $table->schemalessAttributes('players');
             $table->timestamps();
         });
     }

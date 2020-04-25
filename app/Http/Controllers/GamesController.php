@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Game;
+use App\Models\Game;
 use App\Models\GameType;
 
 class GamesController extends Controller
@@ -18,6 +18,8 @@ class GamesController extends Controller
             'players' => 'required'
         ]);
 
-        $game = new Game($data['game'], $data['players']);
+        $game = Game::start($data['game'], $data['players']);
+
+        return redirect($game->setupLink);
     }
 }
