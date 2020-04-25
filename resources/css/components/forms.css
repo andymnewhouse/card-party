@@ -1,0 +1,11 @@
+.form-label {
+    @apply block text-sm font-medium leading-5 text-gray-700;
+}
+
+.form-control {
+    @apply appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md transition duration-150 ease-in-out;
+
+    &:focus {
+        @apply outline-none shadow-outline-blue border-blue-300;
+    }
+}

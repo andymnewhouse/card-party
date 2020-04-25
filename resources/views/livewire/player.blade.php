@@ -1,13 +1,14 @@
 <div class="rounded shadow p-4 bg-gray-100">
-    <h2>{{ $player['name'] }}</h2>
+    <h2 class="uppercase text-gray-800 text-sm mb-2">{{ $player['name'] }} <span
+            class="text-gray-600">({{ count($hand) }})</span></h2>
 
     <div class="grid grid-cols-8 gap-4">
         <div class="col-span-7 flex">
             @foreach($hand as $card)
             @if($loop->index > 0)
-            <x-card class="inline-block w-24 -ml-8" :card="$card" :key="$loop->index" />
+            <x-card class="inline-block w-24 -ml-8" wire:click="discard" :card="$card" :key="$loop->index" />
             @else
-            <x-card class="inline-block w-24" :card="$card" :key="$loop->index" />
+            <x-card class="inline-block w-24" wire:click="discard" :card="$card" :key="$loop->index" />
             @endif
             @endforeach
         </div>
@@ -20,5 +21,4 @@
                 -> 2</button>
         </div>
     </div>
-
 </div>

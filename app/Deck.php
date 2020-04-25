@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Models\Card;
 use Illuminate\Support\Collection;
 
 class Deck
