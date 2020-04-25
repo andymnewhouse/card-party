@@ -27,4 +27,5 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/games/start', 'GamesController@create');
+Route::get('/games/start', 'GamesController@create')->name('games.create');
+Route::post('/games', 'GamesController@store')->name('games.store');

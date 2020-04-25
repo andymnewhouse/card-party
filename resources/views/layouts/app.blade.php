@@ -18,15 +18,13 @@
     @livewireStyles
 </head>
 
-<body>
+<body class="h-screen bg-gray-100">
     <div id="app">
-        @include('layouts.partials.nav')
+        {{-- @include('layouts.partials.nav') --}}
 
         @include('layouts.partials.header')
         <main>
-            <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                @yield('content')
-            </div>
+            @yield('content')
         </main>
     </div>
 

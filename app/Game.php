@@ -2,15 +2,17 @@
 
 namespace App;
 
+use App\Models\GameType;
+
 class Game
 {
     public $game;
     public $players;
     public $deck;
 
-    public function __construct($players)
+    public function __construct($game, $players)
     {
-        $this->game = 'progressive';
+        $this->game = GameType::find($game);
         $this->players = $players;
         $this->deck = new Deck(round(count($this->players) / 2), 'normal-with-jokers');
 
