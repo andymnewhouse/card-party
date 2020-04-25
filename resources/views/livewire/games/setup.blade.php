@@ -5,9 +5,9 @@
         </h2>
 
         @foreach($game->players as $index => $player)
-        <button type="button"
-            class="block w-full p-4 rounded border border-gray-100 mb-2 hover:shadow-sm transition duration-150 ease-in-out"
-            wire:click="choose({{ $index }})">
+        <button type="button" class="block w-full p-4 rounded border border-gray-100 mb-2 hover:shadow-sm transition duration-150 ease-in-out
+            @if($player['user_id'])bg-blue-200 @endif" wire:click="choose({{ $index }})"
+            @if($player['user_id'])disabled @endif>
             {{ $player['name'] }}
         </button>
         @endforeach
