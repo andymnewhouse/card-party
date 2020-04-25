@@ -16,8 +16,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'WelcomeController')->name('welcome');
-Route::get('/home', 'HomeController')->name('home');
-Route::get('/games/start', 'GamesController@create')->name('games.create');
-Route::post('/games', 'GamesController@store')->name('games.store');
-Route::get('/games/{hash}/setup', 'GamesSetupController')->name('games.setup');
-Route::get('/games/{hash}/play', 'GamesPlayController')->name('games.play');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/home', 'HomeController')->name('home');
+    Route::get('/games/start', 'GamesController@create')->name('games.create');
+    Route::post('/games', 'GamesController@store')->name('games.store');
+    Route::get('/games/{hash}/setup', 'GamesSetupController')->name('games.setup');
+    Route::get('/games/{hash}/play', 'GamesPlayController')->name('games.play');
+});
