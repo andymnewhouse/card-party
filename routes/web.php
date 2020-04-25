@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+Route::get('/', 'WelcomeController')->name('welcome');
 Route::get('/home', 'HomeController')->name('home');
 Route::get('/games/start', 'GamesController@create')->name('games.create');
 Route::post('/games', 'GamesController@store')->name('games.store');
