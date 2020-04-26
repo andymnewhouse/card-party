@@ -13,7 +13,7 @@ class CreateGamesTable extends Migration
             $table->unsignedInteger('game_type_id');
             $table->unsignedInteger('num_players');
             $table->json('hands');
-            $table->json('players');
+            $table->unsignedInteger('current_hand')->default(0);
             $table->boolean('has_started')->default(false);
             $table->boolean('has_finished')->default(false);
             $table->timestamps();

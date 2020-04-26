@@ -22,11 +22,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function games() {
+    public function friends()
+    {
+        return $this->belongsToMany(User::class, 'friend_user', 'user_id', 'friend_id');
+    }
+
+    public function games() 
+    {
         return $this->belongsToMany(Game::class);
     }
 
     public function getGravatarAttribute() {
         return Gravatar::get($this->email);
+    }
+
+    public function addFriend($friend_id)
+    {
+        $this->friends()->attach($friend_id);
+        $friend = User::find($friend_id);
+        $friend->friends()->attach($this->id);
+    }
+
+    public function removeFriend($friend_id)
+    {
+        $this->friends()->detach($friend_id);
+        $friend = User::find($friend_id);
+        $friend->friends()->detach($this->id);
     }
 }

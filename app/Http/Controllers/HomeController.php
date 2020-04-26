@@ -14,6 +14,7 @@ class HomeController extends Controller
     {
         return view('home', [
             'games' => auth()->user()->games,
+            'friends' => auth()->user()->friends,
         ]);
     }
 }

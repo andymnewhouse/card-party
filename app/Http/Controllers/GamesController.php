@@ -19,6 +19,6 @@ class GamesController extends Controller
 
         $game = Game::start($data['game'], $data['players']);
 
-        return redirect($game->setupLink);
+        return redirect($game->playLink);
     }
 }
