@@ -1,16 +1,31 @@
 <div class="game-container h-screen">
-    <div class="instructions-area flex items-center justify-center">
-        <div class="font-medium text-lg">{{ $instructions }}</div>
-    </div>
-    <div class="table-area">
-        <div class="max-w-7xl mx-auto h-full sm:px-6 lg:px-8">
-            <div class="table">
-                @foreach($players as $index => $player)
-                <div class="circle{{ $index === $activePlayer ? ' active' : '' }} flex items-center justify-center text-sm text-white"
-                    number="{{ $index+1 }}" total="{{ count($players) }}">{{ substr($player['name'], 0, 1) }}</div>
-                @endforeach
+    <div class="instructions-area">
+        <div class="font-medium text-lg text-center my-2">{{ $instructions }}</div>
+        <div class="flex items-center justify-around p-2">
+            @foreach($players as $index => $player)
+            <div class="text-center">
+                <div
+                    class="{{ $index === $activePlayer ? 'bg-purple-600' : 'bg-blue-600'}} mx-auto rounded-full border-2 w-8 h-8 flex items-center justify-center text-sm text-white">
+                    {{ substr($player['name'], 0, 1) }}</div>
+                {{ Str::before($player['name'], ' ') }}
             </div>
-            <div class="h-1/3 flex bg-green-300 pb-6 items-center justify-center">
+            @endforeach
+        </div>
+    </div>
+    <div class="table-area relative bg-green-300 shadow-inner">
+        <div class="max-w-7xl mx-auto h-full sm:px-6 lg:px-8">
+            <div class="table pt-8">
+                <div class="grid grid-cols-4 gap-6">
+                    @foreach($table as $group)
+                    <div class="shadow-inner p-2 rounded bg-green-400 flex hand">
+                        @foreach($group as $cardIndex => $card)
+                        <x-card-sm :card="$card" :key="$cardIndex" />
+                        @endforeach
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="h-1/3 flex items-center justify-center">
                 @if(count($discard) > 0)
                 <x-card class="inline-block mr-2" :card="$discard[0]" wire:click="pick('discard')" />
                 @else
@@ -28,6 +43,50 @@
                 @endif
             </div>
         </div>
+        @if($editMode)
+        <div class="absolute w-full h-full top-0 bg-gray-transparent flex items-center justify-center">
+            <div
+                class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-2xl sm:w-full sm:p-6">
+                <div>
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">
+                        What do you want to lay down?
+                    </h3>
+                    <div class="mt-2">
+                        <p class="text-sm leading-5 text-gray-500">
+                            Select a card from your hand then select a box to put it in.
+                        </p>
+                    </div>
+                    <div class="mt-2 flex -mx-4">
+                        @foreach($boxes as $index => $box)
+                        <div class="flex-1 mx-4 rounded bg-gray-100 h-48 shadow-inner p-4"
+                            wire:click="place({{ $index }})" :key="$index">
+                            <p class="text-gray-500 text-xs italic mb-2"> {{ $box['label' ]}}</p>
+                            <div class="flex hand">
+                                @foreach($box['cards'] as $cardIndex => $card)
+                                <x-card class="inline-block" :card="$card" :key="$cardIndex" disabled />
+                                @endforeach
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-6 grid grid-cols-2 gap-6">
+                    <span class="w-full rounded-md shadow-sm">
+                        <button type="button"
+                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                            Cancel
+                        </button>
+                    </span>
+                    <span class="w-full rounded-md shadow-sm" wire:click="play">
+                        <button type="button"
+                            class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                            Play
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
     <div class="hand-area">
         <div class="shadow-lg bg-white">
@@ -36,10 +95,21 @@
                         class="text-gray-600">({{ count($my_hand) }})</span></h2>
 
                 <div class="grid grid-cols-6 gap-4">
-                    <div class="col-span-5 flex hand">
-                        @foreach($my_hand as $cardIndex => $card)
-                        <x-card class="inline-block" :index="$cardIndex" :card="$card" :key="$cardIndex" />
-                        @endforeach
+                    <div class="col-span-5">
+                        @if($my_selected->count() > 0)
+                        <div class="hand">
+                            @foreach($my_selected as $cardIndex => $card)
+                            <x-card class="inline-block bg-blue-200" :index="$cardIndex" :card="$card" :key="$cardIndex"
+                                :editMode="$editMode" />
+                            @endforeach
+                        </div>
+                        @endif
+                        <div class="hand flex flex-no-wrap">
+                            @foreach($my_hand as $cardIndex => $card)
+                            <x-card class="inline-block" :index="$cardIndex" :card="$card" :key="$cardIndex"
+                                :editMode="$editMode" />
+                            @endforeach
+                        </div>
                     </div>
                     <div>
                         <button type="button" wire:click="buy"

@@ -920,8 +920,26 @@ video {
     background-color: #c3ddfd;
   }
 
+.sm-card {
+  position: relative;
+  border-width: 2px;
+  border-color: #000000;
+  border-radius: 0.5rem;
+  background-color: #ffffff;
+  padding: 0.25rem;
+  width: 2rem;
+  height: 3rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+}
+
 .hand .card:not(:first-child) {
   margin-left: -2rem;
+}
+
+.hand .sm-card:not(:first-child) {
+  margin-left: -0.5rem;
 }
 
 .form-label {
@@ -40275,64 +40293,16 @@ video {
   transition-duration: 1000ms;
 }
 
+.bg-gray-transparent {
+  background: rgba(50,50,50,.8);
+}
+
 .table {
   position: relative;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
   height: 66.666667%;
-}
-
-.table:before {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border-top-left-radius: 9999px;
-  border-top-right-radius: 9999px;
-  background-color: #84e1bc;
-  z-index: 0;
-  content: "";
-}
-
-.circle {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 9999px;
-  background-color: #1c64f2;
-  border-color: #1e429f;
-  border-width: 2px;
-  position: absolute;
-  overflow: hidden;
-}
-
-.circle.active {
-    border-color: #ffffff;
-    background-color: #5850ec;
-  }
-
-.circle:nth-child(1) {
-  left: 1.5rem;
-  bottom: 3rem;
-}
-
-.circle:nth-child(2) {
-  left: calc(20% - 1.5rem);
-  top: 6rem;
-}
-
-.circle:nth-child(3) {
-  left: calc(50% - 1.5rem);
-  top: 1.5rem;
-}
-
-.circle:nth-child(4) {
-  right: calc(20% - 1.5rem);
-  top: 6rem;
-}
-
-.circle:nth-child(5) {
-  right: 1.5rem;
-  bottom: 3rem;
 }
 
 @media (min-width: 640px) {
