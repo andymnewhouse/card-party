@@ -2,25 +2,22 @@
 
 namespace App;
 
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 
-class Deck
+class Deck extends Model
 {
-    public $cards;
-
-    public function __construct($decks = 1, $type = 'normal')
+    public function round()
     {
-        $this->cards = Collection::times($decks, function ($number) use ($type) {
-            return $this->getDeckByType($type);
-        })->flatten()->shuffle();
+        return $this->belongsTo(Round::class);
     }
 
-    public function getDeckByType($type)
+    public function cards()
     {
-        if ($type === 'normal') {
-            return Card::whereType('normal')->get();
-        } elseif ($type === 'normal-with-jokers') {
-            return Card::all();
-        }
+        return $this->belongsTo(Card::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
