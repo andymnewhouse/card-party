@@ -18,7 +18,6 @@ class CreateStockTable extends Migration
             $table->timestamps();
 
             $table->foreign('round_id')->references('id')->on('rounds')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 }
