@@ -27,7 +27,7 @@
                     {{ __('Password') }}
                 </label>
                 <div class="mt-1 rounded-md shadow-sm">
-                    <input id="password" type="password" name="password" required autocomplete="new-password"
+                    <input id="password" type="password" name="password" required autocomplete="current-password"
                         class="form-control @error('password') border-red-500 @enderror" />
                 </div>
 
