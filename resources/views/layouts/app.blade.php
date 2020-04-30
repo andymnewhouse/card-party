@@ -19,15 +19,17 @@
     @livewireStyles
 </head>
 
-<body class="h-screen bg-gray-100">
-    <div id="app">
-        @include('layouts.partials.nav')
+<body class="bg-gray-100">
+    @include('layouts.partials.nav')
 
-        @include('layouts.partials.header')
-        <main>
-            @yield('content')
-        </main>
-    </div>
+    @hasSection('header')
+    @yield('header')
+    @else
+    @include('layouts.partials.header')
+    @endif
+    <main class="h-full">
+        @yield('content')
+    </main>
 
     @livewireScripts
 </body>

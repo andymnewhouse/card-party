@@ -22,8 +22,8 @@ class Pickup extends Transition
 
     public function handle()
     {
-        $this->stock->state = new Hand($this->stock);
-        $this->stock->user_id = $this->user->id;
+        $this->user->stock()->save($this->stock);
+        $this->stock->location = new Hand($this->stock);
         $this->stock->save();
 
         return $this->stock;

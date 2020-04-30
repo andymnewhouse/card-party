@@ -19,7 +19,6 @@ Route::get('/', 'WelcomeController')->name('welcome');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', 'HomeController')->name('home');
-    Route::get('/games/start', 'GamesController@create')->name('games.create');
-    Route::post('/games', 'GamesController@store')->name('games.store');
+    Route::get('/games/{hash}/join', 'GamesJoinController')->name('games.join');
     Route::get('/games/{hash}/play', 'GamesPlayController')->name('games.play');
 });

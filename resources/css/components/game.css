@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 0.25fr 3fr 0.6fr;
-  gap: 1px 1px;
+  gap: 0px 0px;
   grid-template-areas: "instructions-area instructions-area instructions-area instructions-area" "table-area table-area table-area table-area" "hand-area hand-area hand-area hand-area";
 }
 

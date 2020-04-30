@@ -13,8 +13,8 @@ class CreateStockTable extends Migration
             $table->unsignedBigInteger('round_id');
             $table->unsignedInteger('card_id');
             $table->string('location');
-            $table->unsignedBigInteger('model_id');
-            $table->string('model_type');
+            $table->unsignedBigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
             $table->timestamps();
 
             $table->foreign('round_id')->references('id')->on('rounds')->onDelete('cascade');

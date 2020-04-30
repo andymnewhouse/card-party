@@ -19,9 +19,9 @@ class Discarded extends Transition
 
     public function handle()
     {
-        $this->stock->state = new Hand($this->stock);
-        $this->stock->user_id = null;
-        $this->stock->save();
+        $this->stock->location = new Discard($this->stock);
+        $this->stock->model_id = null;
+        $this->stock->model_type = null;
 
         return $this->stock;
     }

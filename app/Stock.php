@@ -16,6 +16,7 @@ class Stock extends Model
 {
     use HasStates;
 
+    protected $guarded = [];
     protected $table = 'stock';
 
     protected function registerStates()
@@ -37,7 +38,7 @@ class Stock extends Model
         return $this->belongsTo(Round::class);
     }
 
-    public function cards()
+    public function card()
     {
         return $this->belongsTo(Card::class);
     }

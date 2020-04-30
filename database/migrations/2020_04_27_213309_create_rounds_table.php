@@ -13,6 +13,7 @@ class CreateRoundsTable extends Migration
             $table->unsignedBigInteger('game_id');
             $table->unsignedInteger('num_cards');
             $table->unsignedBigInteger('active_player_id');
+            $table->json('goals')->nullable();
             $table->boolean('has_started')->default(false);
             $table->boolean('has_finished')->default(false);
             $table->timestamps();

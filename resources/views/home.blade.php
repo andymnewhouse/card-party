@@ -4,7 +4,7 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
     <div class="grid grid-cols-3 gap-6">
         <div class="col-span-2">
-            <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <div class="bg-white shadow sm:rounded-md">
                 <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
                     <div class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-no-wrap">
                         <div class="ml-4 mt-2">
@@ -13,12 +13,7 @@
                             </h3>
                         </div>
                         <div class="ml-4 mt-2 flex-shrink-0">
-                            <span class="inline-flex rounded-md shadow-sm">
-                                <a href="{{ route('games.create') }}"
-                                    class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
-                                    Start a New Game
-                                </a>
-                            </span>
+                            <livewire:games.start />
                         </div>
                     </div>
                 </div>

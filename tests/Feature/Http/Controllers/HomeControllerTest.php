@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -16,7 +17,7 @@ class HomeControllerTest extends TestCase
     /** @test */
     public function invoke_returns_an_ok_response()
     {
-        $user = factory(\App\User::class)->create();
+        $user = factory(User::class)->create();
 
         $response = $this->actingAs($user)->get(route('home'));
 

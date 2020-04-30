@@ -1,14 +1,13 @@
 <div class="game-container h-screen">
     <div class="instructions-area">
         <div class="font-medium text-lg text-center my-2">{{ $instructions }}</div>
-        <div class="flex items-center justify-around p-2">
+        <div class="flex items-center justify-around">
             @foreach($players as $index => $player)
-            <div class="text-center">
-                <div
-                    class="{{ $index === $activePlayer ? 'bg-purple-600' : 'bg-blue-600'}} mx-auto rounded-full border-2 w-8 h-8 flex items-center justify-center text-sm text-white">
-                    {{ substr($player['name'], 0, 1) }}</div>
-                {{ Str::before($player['name'], ' ') }}
-            </div>
+            @if($player->id === $activePlayerId)
+            <x-player :user="$player" size="12" class="flex-1 p-2 bg-gray-200" />
+            @else
+            <x-player :user="$player" size="12" class="flex-1 p-2" />
+            @endif
             @endforeach
         </div>
     </div>
@@ -26,25 +25,26 @@
                 </div>
             </div>
             <div class="h-1/3 flex items-center justify-center">
-                @if(count($discard) > 0)
-                <x-card class="inline-block mr-2" :card="$discard[0]" wire:click="pick('discard')" />
+                @if($discard->count() > 0)
+                <x-card class="inline-block mr-2" :card="$discard->first()->card"
+                    wire:click="move('discard', 'hand', {{ $discard->first()->id }})" />
                 @else
                 <div class="inline-block bg-green-400 rounded-lg w-24 h-32 mr-2"></div>
                 @endif
 
-                @if(!$game->has_started)
+                @if(!$game->currentRound->has_started)
                 <button type="button"
                     class="border-2 border-black rounded-lg p-4 inline-block w-24 h-32 card-back focus:outline-none focus:shadow-outline-blue active:bg-blue-200 transition ease-in-out duration-150"
                     wire:click="start"></button>
                 @else
                 <button type="button"
                     class="border-2 border-black rounded-lg p-4 inline-block w-24 h-32 card-back focus:outline-none focus:shadow-outline-blue active:bg-blue-200 transition ease-in-out duration-150"
-                    wire:click="pick('deck')"></button>
+                    wire:click="move('deck', 'hand')"></button>
                 @endif
             </div>
         </div>
         @if($editMode)
-        <div class="absolute w-full h-full top-0 bg-gray-transparent flex items-center justify-center">
+        <div class=" absolute w-full h-full top-0 bg-gray-transparent flex items-center justify-center">
             <div
                 class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-2xl sm:w-full sm:p-6">
                 <div>
@@ -96,17 +96,9 @@
 
                 <div class="grid grid-cols-6 gap-4">
                     <div class="col-span-5">
-                        @if($my_selected->count() > 0)
-                        <div class="hand">
-                            @foreach($my_selected as $cardIndex => $card)
-                            <x-card class="inline-block bg-blue-200" :index="$cardIndex" :card="$card" :key="$cardIndex"
-                                :editMode="$editMode" />
-                            @endforeach
-                        </div>
-                        @endif
                         <div class="hand flex flex-no-wrap">
                             @foreach($my_hand as $cardIndex => $card)
-                            <x-card class="inline-block" :index="$cardIndex" :card="$card" :key="$cardIndex"
+                            <x-card class="inline-block" :index="$card->stock_id" :card="$card" :key="$cardIndex"
                                 :editMode="$editMode" />
                             @endforeach
                         </div>
