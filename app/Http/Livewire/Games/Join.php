@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Games;
 
+use App\Events\LetsPlay;
 use Livewire\Component;
 
 class Join extends Component
@@ -19,6 +20,7 @@ class Join extends Component
     {
         return [
             "echo-private:games.{$this->gameId},PlayerJoined" => 'refreshGame',
+            "echo-private:games.{$this->gameId},LetsPlay" => 'redirectToPlay',
         ];
     }
 
@@ -29,6 +31,11 @@ class Join extends Component
         ]);
     }
 
+    public function redirectToPlay()
+    {
+        return redirect($this->game->playLink);
+    }
+
     public function refreshGame() 
     {
         $this->game = $this->game->fresh();
@@ -37,6 +44,7 @@ class Join extends Component
     public function start()
     {
         $this->game->start();
+        event(new LetsPlay($this->game->id));
 
         return redirect($this->game->playLink);
     }

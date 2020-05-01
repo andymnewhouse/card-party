@@ -12,13 +12,10 @@
 
     @if(auth()->id() === $game->owner_id)
     <div class="text-center">
-        <span class="inline-flex rounded-md shadow-sm mx-auto">
-            <button wire:click="start" @if($players->count() < $game->game_type->min_players) disabled @endif
-                    class="inline-flex items-center px-6 py-3 border border-transparent text-base leading-6 font-medium
-                    rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700
-                    focus:shadow-outline-indigo active:bg-indigo-700 disabled:opacity-75 transition ease-in-out
-                    duration-150">
-                    All Set, Let's Start
+        <span class="btn-shadow">
+            <button wire:click="start" class="btn btn-primary btn-xl"
+                {{ $players->count() < $game->game_type->min_players ? 'disabled' : '' }}>
+                All Set, Let's Start
             </button>
         </span>
     </div>

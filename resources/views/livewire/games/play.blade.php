@@ -3,11 +3,8 @@
         <div class="font-medium text-lg text-center my-2">{{ $instructions }}</div>
         <div class="flex items-center justify-around">
             @foreach($players as $index => $player)
-            @if($player->id === $activePlayerId)
-            <x-player :user="$player" size="12" class="flex-1 p-2 bg-gray-200" />
-            @else
-            <x-player :user="$player" size="12" class="flex-1 p-2" />
-            @endif
+            <x-player :user="$player" size="12"
+                class="flex-1 p-2 {{ $player->id === $activePlayerId ? 'bg-gray-200' : '' }}" />
             @endforeach
         </div>
     </div>
@@ -57,12 +54,12 @@
                         </p>
                     </div>
                     <div class="mt-2 flex -mx-4">
-                        @foreach($boxes as $index => $box)
+                        @foreach($goals as $index => $goal)
                         <div class="flex-1 mx-4 rounded bg-gray-100 h-48 shadow-inner p-4"
                             wire:click="place({{ $index }})" :key="$index">
-                            <p class="text-gray-500 text-xs italic mb-2"> {{ $box['label' ]}}</p>
+                            <p class="text-gray-500 text-xs italic mb-2"> {{ $goal['label' ]}}</p>
                             <div class="flex hand">
-                                @foreach($box['cards'] as $cardIndex => $card)
+                                @foreach($goal['cards'] as $cardIndex => $card)
                                 <x-card class="inline-block" :card="$card" :key="$cardIndex" disabled />
                                 @endforeach
                             </div>
@@ -92,22 +89,27 @@
         <div class="shadow-lg bg-white">
             <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                 <h2 class="uppercase text-gray-800 text-sm mb-2">{{ auth()->user()->name }} <span
-                        class="text-gray-600">({{ count($my_hand) }})</span></h2>
+                        class="text-gray-600">({{ count($myHand) }})</span></h2>
 
                 <div class="grid grid-cols-6 gap-4">
                     <div class="col-span-5">
                         <div class="hand flex flex-no-wrap">
-                            @foreach($my_hand as $cardIndex => $card)
+                            @foreach($mySelected as $cardIndex => $card)
+                            <x-card class="inline-block" :index="$card->stock_id" :card="$card" :key="$cardIndex"
+                                :editMode="$editMode" class="bg-indigo-200" />
+                            @endforeach
+                            @foreach($myHand as $cardIndex => $card)
                             <x-card class="inline-block" :index="$card->stock_id" :card="$card" :key="$cardIndex"
                                 :editMode="$editMode" />
                             @endforeach
                         </div>
                     </div>
                     <div>
-                        <button type="button" wire:click="buy"
-                            class="mb-2 block w-full text-center items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-50 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200 transition ease-in-out duration-150">Buy</button>
+                        <button type="button" wire:click="buy" {{ auth()->id() === $activePlayerId ? 'disabled' : ''}}
+                            class="mb-2 block w-full text-center btn btn-xs btn-secondary">Buy</button>
                         <button type="button" wire:click="layDown"
-                            class="mb-2 block w-full text-center items-center px-2.5 py-1.5 border border-transparent text-xs leading-4 font-medium rounded text-indigo-700 bg-indigo-100 hover:bg-indigo-50 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200 transition ease-in-out duration-150">Lay
+                            {{ auth()->id() !== $activePlayerId ? 'disabled' : ''}}
+                            class="mb-2 block w-full text-center btn btn-xs btn-secondary">Lay
                             Down</button>
                         <span class="w-full relative z-0 inline-flex shadow-sm">
                             <button type="button" wire:click="sort('asc')"

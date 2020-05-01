@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\States\Discard;
+use App\States\Hand;
 use Illuminate\Database\Eloquent\Model;
 
 class Round extends Model
@@ -27,6 +29,22 @@ class Round extends Model
     public function activePlayer()
     {
         return $this->belongsTo(User::class, 'active_player_id');
+    }
+
+    public function move($from, $to, $stockId = null)
+    {
+        if($from === 'deck' && $to === 'discard') {
+            $this->stock->firstWhere('location', 'deck')->location->transitionTo(Discard::class);
+        } else if($from === 'deck' && $to === 'hand') {
+            $this->stock->firstWhere('location', 'deck')->location->transitionTo(Hand::class, auth()->user());
+        } else if($from === 'discard' && $to === 'hand') {
+            $this->stock->where('location', 'discard')->sortBy('updated_at')->reverse()->first()->location->transitionTo(Hand::class, auth()->user());
+        } else if($to === 'hand') {
+            $this->stock->firstWhere('id', $stockId)->location->transitionTo(Hand::class, auth()->user());
+        } else if($to === 'discard') {
+            $this->stock->firstWhere('id', $stockId)->location->transitionTo(Discard::class, auth()->user());
+            $this->nextPlayer();
+        }
     }
 
     public function nextPlayer()

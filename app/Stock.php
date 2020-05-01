@@ -7,6 +7,7 @@ use App\States\Discard;
 use App\States\Hand;
 use App\States\Table;
 use App\States\LocationState;
+use App\States\Selected;
 use App\Transitions\Discarded;
 use App\Transitions\Pickup;
 use Illuminate\Database\Eloquent\Model;
@@ -29,6 +30,7 @@ class Stock extends Model
             ->allowTransition(Discard::class, Table::class) // Hot Card
             ->allowTransition(Hand::class, Table::class) // Playing
             ->allowTransition(Hand::class, Discard::class, Discarded::class)
+            ->allowTransition(Hand::class, Selected::class) // choosing card to place in group
             ->allowTransition(Table::class, Hand::class) // Joker Replace (might want to change from table -> table or table -> limbo)
             ->default(Deck::class);
     }

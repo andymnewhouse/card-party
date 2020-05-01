@@ -20,7 +20,7 @@
                 <ul>
                     @forelse ($games as $game)
                     <li>
-                        <a href="{{ $game->play_link }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150
+                        <a href="{{ $game->rounds->count() > 0 ? $game->play_link : $game->joinLink }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150
                             ease-in-out">
                             <div class="px-4 py-4 flex items-center sm:px-6">
                                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -47,16 +47,8 @@
                                     <div class="mt-4 flex-shrink-0 sm:mt-0">
                                         <div class="flex overflow-hidden">
                                             @foreach($game->players as $player)
-                                            @if($player['user_id'] !== null)
-                                            <img class="{{ $loop->first ? '' : '-ml-1'}} inline-block h-8 w-8 rounded-full text-white shadow-solid"
-                                                src="{{ $game->users->firstWhere('id', $player['user_id'])->gravatar }}"
-                                                alt="" />
-                                            @else
-                                            <div
-                                                class="{{ $loop->first ? '' : '-ml-1'}} inline-block h-8 w-8 rounded-full text-white bg-blue-600 shadow-solid flex items-center justify-center">
-                                                {{ substr($player['name'], 0, 1) }}
-                                            </div>
-                                            @endif
+                                            <x-player :user="$player" size="8"
+                                                class="{{ $loop->first ? '' : '-ml-1' }} inline-block" withoutName />
                                             @endforeach
                                         </div>
                                     </div>

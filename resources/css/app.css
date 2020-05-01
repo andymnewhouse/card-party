@@ -2,10 +2,11 @@
 
 @import "tailwindcss/components";
 
-@import "./components/animate.css";
-@import "./components/cards.css";
-@import "./components/forms.css";
-@import "./components/game.css";
+@import "./components/animate";
+@import "./components/buttons";
+@import "./components/cards";
+@import "./components/forms";
+@import "./components/game";
 
 @import "tailwindcss/utilities";
 
