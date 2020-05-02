@@ -2,211 +2,147 @@
 
 namespace App\Http\Livewire\Games;
 
-use App\Events\Bought;
-use App\Events\CardDiscarded;
-use App\Events\CardPicked;
-use App\Events\CardsPlayed;
+use App\CardGroup;
 use App\Events\GameStarted;
-use App\GameType;
-use Illuminate\Support\Arr;
+use App\Events\RefreshGame;
+use App\States\Discard;
+use App\States\Hand;
+use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Play extends Component
 {
-    public $boxes;
     public $editMode = false;
     public $game;
     public $gameId;
+    public $goals;
     public $picked = false;
-    public $selected;
+    public $selected = [];
+    public $selectedCount = 0;
     public $sort = '';
+    public $toPlace;
 
     public function mount($game)
     {
-        $this->game = $game->load('players', 'game_type');
-        dd($this->game->hands);
+        $this->game = $game->load('players', 'game_type', 'currentRound');
         $this->gameId = $game->id;
-        $this->boxes = $game->game_type->rounds[$game->current_hand]['boxes'];
+        $this->goals = $game->currentRound->goals->toArray();
     }
 
     public function getListeners()
     {
         return [
-            "echo-private:games.{$this->gameId},Bought" => 'refreshGame',
-            "echo-private:games.{$this->gameId},CardDiscarded" => 'refreshGame',
-            "echo-private:games.{$this->gameId},CardPicked" => 'refreshGame',
-            "echo-private:games.{$this->gameId},CardsPlayed" => 'refreshGame',
+            "echo-private:games.{$this->gameId},RefreshGame" => 'refreshGame',
             "echo-private:games.{$this->gameId},GameStarted" => 'refreshGame',
         ];
     }
 
     public function render()
     {
-        list($myHand, $selected) = collect($this->getAuthPlayer())
-            ->when($this->sort !== '', function ($items) {
-                if ($this->sort === 'asc') {
-                    return $items->sortBy('number');
-                } else {
-                    return $items->sortByDesc('number');
-                }
-            })
-            ->partition(function($card) {
-                return !isset($card['selected']);
-            });
-        
         return view('livewire.games.play', [
-            'deck' => $this->game->hands[$this->game->current_hand]['deck'],
-            'table' => $this->game->hands[$this->game->current_hand]['table'],
-            'discard' => $this->game->hands[$this->game->current_hand]['discard'],
+            'deck' => $this->game->currentRound->stock->where('location', 'deck'),
+            'table' => $this->game->currentRound->cardGroups->load('stock', 'owner'),
+            'discard' => $this->game->currentRound->stock->where('location', 'discard')->sortBy('updated_at')->reverse(),
             'instructions' => $this->getInstructions(),
-            'my_hand' => $myHand,
-            'my_selected' => $selected,
+            'myHand' => $this->getMyHand(),
             'players' => $this->game->players,
-            'activePlayer' => $this->game->hands[$this->game->current_hand]['active_player'],
+            'activePlayerId' => $this->game->currentRound->activePlayer->id,
+            'iHavePlayed' => $this->game->currentRound->cardGroups->pluck('owner_id')->contains(auth()->id()),
         ]);
     }
 
     public function buy()
     {
-        $hands = $this->game->hands;
-        $hand = $hands[$this->game->current_hand];
-
-        // Get cards
-        $card1 = array_shift($hand['deck']);
-        $card2 = array_shift($hand['deck']);
-        $card3 = array_shift($hand['discard']);
-
-        // Add to player's hand
-        $hand['players'][$this->getAuthIndex()]['hand'][] = $card1;
-        $hand['players'][$this->getAuthIndex()]['hand'][] = $card2;
-        $hand['players'][$this->getAuthIndex()]['hand'][] = $card3;
-
-        $hands[$this->game->current_hand] = $hand;
-        $this->game->hands = $hands;
-        $this->game->save();
-
-        event(new Bought($this->gameId));
+        $this->game->currentRound->move('discard', 'hand');
+        $this->game->currentRound->move('deck', 'hand');
+        $this->game->currentRound->move('deck', 'hand');
+        event(new RefreshGame($this->game->id));
     }
 
-    public function discard($cardIndex)
+    public function cancel()
     {
-        $hands = $this->game->hands;
-        $hand = $hands[$this->game->current_hand];
-        $activePlayer = $hand['active_player'];
-        
-        // Remove from player's hand
-        $card = $hand['players'][$activePlayer]['hand'][$cardIndex];
-        unset($hand['players'][$activePlayer]['hand'][$cardIndex]);
-
-        // Add to discard pile
-        array_unshift($hand['discard'], $card);
-
-        $this->picked = false;
-        $activePlayer++;
-        // Go back to first player
-        if (! isset($hand['players'][$activePlayer])) {
-            $activePlayer = 0;
+        $this->editMode = false;
+        foreach($this->goals as $index => $goal) {
+            $this->goals[$index]['cards'] = [];
+            $this->selected = [];
+            $this->toPlace = null;
         }
-
-        $hand['active_player'] = $activePlayer;
-        $hands[$this->game->current_hand] = $hand;
-
-        $this->game->hands = $hands;
-        $this->game->save();
-
-        event(new CardDiscarded($this->gameId));
     }
 
-    public function getAuthPlayer()
+    public function getMyHand()
     {
-        return Arr::first(Arr::where($this->game->hands[$this->game->current_hand]['players'], function ($player) {
-                return $player['user_id'] === auth()->id();
-            }))['hand'];
-    }
-
-    public function getAuthIndex()
-    {
-        return array_key_first(Arr::where($this->game->hands[$this->game->current_hand]['players'], function ($player) {
-                return $player['user_id'] === auth()->id();
-            }));
+        return $this->game->currentRound->stock()
+            ->where('model_id', auth()->id())
+            ->where('model_type', 'App\User')
+            ->where('location', 'hand')
+            ->with('card')
+            ->get()
+            ->when($this->sort !== '', function ($items) {
+                if ($this->sort === 'asc') {
+                    return $items->sortBy('smallCard.number');
+                } else {
+                    return $items->sortByDesc('smallCard.number');
+                }
+            });
     }
 
     public function getInstructions() 
     {
-        if(!$this->game->has_started) {
+        if(!$this->game->currentRound->has_started) {
             return 'Please click the deck to start the game.';
         } else {
-            if($this->picked === false) {
-                return $this->game->players[$this->game->hands[$this->game->current_hand]['active_player']]['name'] . "'s turn to pickup";
-            }
-            return $this->game->players[$this->game->hands[$this->game->current_hand]['active_player']]['name'] . "'s turn to discard";
+            $name = Str::before($this->game->currentRound->activePlayer->name, ' ');
+            return "It is {$name}'s Turn.";
         }
     }
 
     public function layDown()
     {
-        $this->editMode = !$this->editMode;
+        $this->editMode = true;
     }
 
-    public function pick($type)
+    public function move($from, $to, $stockId = null)
     {
-        if($this->picked === true) {
-            return 'You already picked a card!';
-        }
+        if($this->game->currentRound->activePlayer->id === auth()->id()) {
+            $this->game->currentRound->move($from, $to, $stockId);
 
-        $hands = $this->game->hands;
-        $hand = $hands[$this->game->current_hand];
-
-        // Get card
-        if ($type === 'deck') {
-            $card = array_shift($hand['deck']);
+            event(new RefreshGame($this->game->id));
         } else {
-            $card = array_shift($hand['discard']);
+            dd('You are not the active player');
         }
-
-        $this->picked = true;
-
-        // Add to player's hand
-        $hand['players'][$this->game->hands[$this->game->current_hand]['active_player']]['hand'][] = $card;
-
-        $hands[$this->game->current_hand] = $hand;
-        $this->game->hands = $hands;
-        $this->game->save();
-
-        event(new CardPicked($this->gameId));
     }
 
-    public function place($box)
+    public function place($index)
     {
-        if($this->selected !== null) {
-            $this->boxes[$box]['cards'][] = $this->selected;
-            $this->selected = null;
+        if($this->toPlace !== null) {
+            $this->goals[$index]['cards'][] = $this->toPlace;
+            $this->toPlace = null;
         }
     }
 
     public function play()
     {
-        $hands = $this->game->hands;
-        $hand = $hands[$this->game->current_hand];
-
-        // Move cards from boxes to table
-        foreach($this->boxes as $box) {
-            $hand['table'][] = $box['cards'];
+        // Validate
+        foreach($this->goals as $index => $goal) {
+            if($goal['min_cards'] > count($goal['cards'])) {
+                $numMissing = $goal['min_cards'] - count($goal['cards']);
+                $cardString = $numMissing === 1 ? 'card' : 'cards';
+                $goalNumber = strtolower(numToOrdinalWord($index + 1));
+                dd("You need {$numMissing} more {$cardString} to complete the {$goalNumber} goal.");
+            }
         }
 
-        // Remove selected cards from player's hand
-        $hand['players'][$hand['active_player']]['hand'] = collect($hand['players'][$hand['active_player']]['hand'])->filter(function($card) {
-            return !isset($card['selected']);
-        })->toArray();
+        // Create Card Groups
+        foreach($this->goals as $index => $goal) {
+            $group = CardGroup::create(['owner_id' => auth()->id(), 'round_id' => $this->game->currentRound->id]);
 
-        $hands[$this->game->current_hand] = $hand;
-
-        $this->game->hands = $hands;
-        $this->game->save();
+            foreach($goal['cards'] as $card) {
+                $this->game->currentRound->move('goal', 'table', $card['id'], $group);
+            }
+        }
 
         $this->editMode = false;
-
-        event(new CardsPlayed($this->gameId));
+        event(new RefreshGame($this->game->id));
     }
 
     public function refreshGame() 
@@ -214,23 +150,16 @@ class Play extends Component
         $this->game = $this->game->fresh();
     }
 
-    public function select($cardIndex)
+    public function selectToPlace($stockId)
     {
-        $hands = $this->game->hands;
-        $hand = $hands[$this->game->current_hand];
-        $activePlayer = $hand['active_player'];
+        if($this->toPlace !== null) {
+            $this->selectedCount--;
+            array_pop($this->selected);
+        }
         
-        // Remove from player's hand
-        $card = $hand['players'][$activePlayer]['hand'][$cardIndex];
-        $card['selected'] = true;
-        $hand['players'][$activePlayer]['hand'][$cardIndex] = $card;
-
-        $this->selected = $card;
-
-        $hands[$this->game->current_hand] = $hand;
-
-        $this->game->hands = $hands;
-        $this->game->save();
+        $this->selectedCount++;
+        $this->selected[] = $this->game->currentRound->stock->firstWhere('id', $stockId);
+        $this->toPlace = $this->game->currentRound->stock->firstWhere('id', $stockId);
     }
 
     public function sort($way)
@@ -240,19 +169,11 @@ class Play extends Component
 
     public function start()
     {
-        $hands = $this->game->hands;
-        $hand = $hands[$this->game->current_hand];
+        $this->game->currentRound->has_started = true;
+        $this->game->currentRound->save();
 
-        // Move top card from deck to discard pile
-        $card = array_shift($hand['deck']);
-        array_unshift($hand['discard'], $card);
+        $this->game->currentRound->move('deck', 'discard');
 
-        $hands[$this->game->current_hand] = $hand;
-        $this->game->hands = $hands;
-
-        $this->game->has_started = true;
-        $this->game->save();
-        
         event(new GameStarted($this->game->id));
     }
 }

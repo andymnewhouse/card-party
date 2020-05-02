@@ -7,10 +7,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class PlayerChosen implements ShouldBroadcast
+class LetsPlay implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -23,6 +24,6 @@ class PlayerChosen implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return new PrivateChannel('games.'.$this->gameId);
+        return new PrivateChannel('games.' . $this->gameId);
     }
 }

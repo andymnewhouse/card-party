@@ -11,11 +11,8 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('game_type_id');
-            $table->unsignedInteger('num_players');
-            $table->json('hands');
-            $table->unsignedInteger('current_hand')->default(0);
-            $table->boolean('has_started')->default(false);
-            $table->boolean('has_finished')->default(false);
+            $table->unsignedBigInteger('owner_id');
+            $table->unsignedInteger('current_round')->default(0);
             $table->timestamps();
         });
     }

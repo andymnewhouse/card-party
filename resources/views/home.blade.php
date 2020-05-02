@@ -4,7 +4,7 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-8">
     <div class="grid grid-cols-3 gap-6">
         <div class="col-span-2">
-            <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <div class="bg-white shadow sm:rounded-md">
                 <div class="px-4 py-5 border-b border-gray-200 sm:px-6">
                     <div class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-no-wrap">
                         <div class="ml-4 mt-2">
@@ -13,19 +13,14 @@
                             </h3>
                         </div>
                         <div class="ml-4 mt-2 flex-shrink-0">
-                            <span class="inline-flex rounded-md shadow-sm">
-                                <a href="{{ route('games.create') }}"
-                                    class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
-                                    Start a New Game
-                                </a>
-                            </span>
+                            <livewire:games.start />
                         </div>
                     </div>
                 </div>
                 <ul>
                     @forelse ($games as $game)
                     <li>
-                        <a href="{{ $game->play_link }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150
+                        <a href="{{ $game->rounds->count() > 0 ? $game->play_link : $game->joinLink }}" class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150
                             ease-in-out">
                             <div class="px-4 py-4 flex items-center sm:px-6">
                                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
@@ -52,16 +47,8 @@
                                     <div class="mt-4 flex-shrink-0 sm:mt-0">
                                         <div class="flex overflow-hidden">
                                             @foreach($game->players as $player)
-                                            @if($player['user_id'] !== null)
-                                            <img class="{{ $loop->first ? '' : '-ml-1'}} inline-block h-8 w-8 rounded-full text-white shadow-solid"
-                                                src="{{ $game->users->firstWhere('id', $player['user_id'])->gravatar }}"
-                                                alt="" />
-                                            @else
-                                            <div
-                                                class="{{ $loop->first ? '' : '-ml-1'}} inline-block h-8 w-8 rounded-full text-white bg-blue-600 shadow-solid flex items-center justify-center">
-                                                {{ substr($player['name'], 0, 1) }}
-                                            </div>
-                                            @endif
+                                            <x-player :user="$player" size="8"
+                                                class="{{ $loop->first ? '' : '-ml-1' }} inline-block" withoutName />
                                             @endforeach
                                         </div>
                                     </div>

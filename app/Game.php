@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\States\Hand;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,78 +10,70 @@ class Game extends Model
 {
     protected $guarded = [];
 
-    public $casts = [
-        'hands' => 'collection',
-        'players' => 'collection',
-    ];
-
-    public static function start($type, $playerIds) {
-        $gameType = GameType::find($type);
-
-        $playersForHands = (new Game)->getPlayersForHands($playerIds);
-        $hands = [
-            ['num_cards' => 6, 'goal' => 'Two sets of three', 'table' => [], 'players' => $playersForHands, 'active_player' => (new Game)->getActivePlayer(0, $playersForHands), 'turn' => 0],
-            ['num_cards' => 7, 'goal' => 'One set of three, One run of four', 'table' => [], 'players' => $playersForHands, 'active_player' => (new Game)->getActivePlayer(1, $playersForHands), 'turn' => 0],
-            ['num_cards' => 8, 'goal' => 'Two runs of four', 'table' => [], 'players' => $playersForHands, 'active_player' => (new Game)->getActivePlayer(2, $playersForHands), 'turn' => 0],
-            ['num_cards' => 9, 'goal' => 'Three sets of three', 'table' => [], 'players' => $playersForHands, 'active_player' => (new Game)->getActivePlayer(3, $playersForHands), 'turn' => 0],
-            ['num_cards' => 10, 'goal' => 'Two sets of three, One run of four', 'table' => [], 'players' => $playersForHands, 'active_player' => (new Game)->getActivePlayer(4, $playersForHands), 'turn' => 0],
-            ['num_cards' => 11, 'goal' => 'One set of three, Two runs of four', 'table' => [], 'players' => $playersForHands, 'active_player' => (new Game)->getActivePlayer(5, $playersForHands), 'turn' => 0],
-            ['num_cards' => 12, 'goal' => 'Three runs of four', 'table' => [], 'players' => $playersForHands, 'active_player' => (new Game)->getActivePlayer(6, $playersForHands), 'turn' => 0],
-        ];
-
-        foreach($hands as $index => $hand) {
-            $hand['deck'] = (new Deck(round(count($playerIds) / 2), 'normal-with-jokers'))->cards;
-            $hand['discard'] = [];
-            $hand = (new Game)->deal($hand, $hand['num_cards']);
-            $hands[$index] = $hand;
-        }
-
-        $game = self::create([
-            'game_type_id' => $gameType->id, 
-            'num_players' => count($playerIds), 
-            'hands' => $hands,
-        ]);
-
-        $game->players()->attach($playerIds);
-
-        return $game;
-    }
-
-    public function game_type() {
+    public function game_type()
+    {
         return $this->belongsTo(GameType::class);
     }
 
-    public function players() {
+    public function rounds()
+    {
+        return $this->hasMany(Round::class);
+    }
+
+    public function currentRound()
+    {
+        return $this->belongsTo(Round::class, 'current_round');
+    }
+
+    public function players()
+    {
         return $this->belongsToMany(User::class);
     }
 
-    public function getPlayLinkAttribute() {
+    public function getJoinLinkAttribute()
+    {
+        return route('games.join', Hashids::encode($this->id));
+    }
+
+    public function getPlayLinkAttribute()
+    {
         return route('games.play', Hashids::encode($this->id));
     }
 
-    private function deal($hand, $numberOfCards)
+    public function start() 
     {
-        foreach (range(1, $numberOfCards) as $card) {
-            foreach ($hand['players'] as  $index => $player) {
-                $hand['players'][$index]['hand'][] = $hand['deck']->shift();
+        $type = $this->game_type;
+        $players = $this->players;
+
+        foreach($type->rounds as $index => $round) {
+            $activePlayer = $players[$index] ?? $players[$index-$players->count()];
+            $gameRound = $this->rounds()->create([
+                'num_cards' => $round['num_cards'], 
+                'active_player_id' => $activePlayer->id,
+                'goals' => $round['goals'],
+            ]);
+
+            if($index === 0) {
+                $this->current_round = $gameRound->id;
+                $this->save();
+            }
+
+            // generate stock for round
+            $gameRound->stock()->createMany( 
+                (new Deck(round($players->count()/2), 'normal-with-jokers'))->cards->map(function($card) {
+                    return [
+                        'card_id' => $card->id,
+                    ];
+                })
+            );
+
+            // deal from stock to players
+            foreach(range(1, $round['num_cards']) as $i){
+                foreach($players as $player) {
+                    $gameRound->stock->firstWhere('model_id', null)->location->transitionTo(Hand::class, $player);
+                    $gameRound->refresh();
+                }
             }
         }
-
-        return $hand;
-    }
-
-    private function getActivePlayer($hand, $players) 
-    {
-        if(isset($players[$hand])) {
-            return $hand;
-        } else {
-            return count($players) - $hand;
-        }
-    }
-
-    private function getPlayersForHands($ids) {
-        return User::whereIn('id', $ids)->get()->map(function($user) {
-            return ['name' => $user->name, 'user_id' => $user->id, 'hand' => [], 'buys' => 0];
-        })->toArray();
     }
 }

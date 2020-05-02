@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Game::class);
     }
 
+    public function stock()
+    {
+        return $this->morphMany(Stock::class, 'model');
+    }
+
     public function getGravatarAttribute() {
         return Gravatar::get($this->email);
     }
