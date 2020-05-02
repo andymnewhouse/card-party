@@ -4,6 +4,7 @@ namespace App;
 
 use App\States\Discard;
 use App\States\Hand;
+use App\States\Table;
 use Illuminate\Database\Eloquent\Model;
 
 class Round extends Model
@@ -16,6 +17,11 @@ class Round extends Model
         'has_finished' => 'boolean',
     ];
 
+    public function cardGroups()
+    {
+        return $this->hasMany(CardGroup::class);
+    }
+
     public function game()
     {
         return $this->belongsTo(Game::class);
@@ -25,13 +31,13 @@ class Round extends Model
     {
         return $this->hasMany(Stock::class);
     }
-
+    
     public function activePlayer()
     {
         return $this->belongsTo(User::class, 'active_player_id');
     }
 
-    public function move($from, $to, $stockId = null)
+    public function move($from, $to, $stockId = null, $group = null)
     {
         if($from === 'deck' && $to === 'discard') {
             $this->stock->firstWhere('location', 'deck')->location->transitionTo(Discard::class);
@@ -44,6 +50,8 @@ class Round extends Model
         } else if($to === 'discard') {
             $this->stock->firstWhere('id', $stockId)->location->transitionTo(Discard::class, auth()->user());
             $this->nextPlayer();
+        } else if ($to === 'table') {
+            $this->stock->firstWhere('id', $stockId)->location->transitionTo(Table::class, $group);
         }
     }
 

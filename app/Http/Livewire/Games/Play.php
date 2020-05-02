@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Games;
 
+use App\CardGroup;
 use App\Events\GameStarted;
 use App\Events\RefreshGame;
 use App\States\Discard;
@@ -16,8 +17,10 @@ class Play extends Component
     public $gameId;
     public $goals;
     public $picked = false;
-    public $selected;
+    public $selected = [];
+    public $selectedCount = 0;
     public $sort = '';
+    public $toPlace;
 
     public function mount($game)
     {
@@ -38,13 +41,13 @@ class Play extends Component
     {
         return view('livewire.games.play', [
             'deck' => $this->game->currentRound->stock->where('location', 'deck'),
-            'table' => $this->game->currentRound->stock->where('location', 'table'),
+            'table' => $this->game->currentRound->cardGroups->load('stock', 'owner'),
             'discard' => $this->game->currentRound->stock->where('location', 'discard')->sortBy('updated_at')->reverse(),
             'instructions' => $this->getInstructions(),
             'myHand' => $this->getMyHand(),
-            'mySelected' => $this->getMySelected(),
             'players' => $this->game->players,
             'activePlayerId' => $this->game->currentRound->activePlayer->id,
+            'iHavePlayed' => $this->game->currentRound->cardGroups->pluck('owner_id')->contains(auth()->id()),
         ]);
     }
 
@@ -56,6 +59,16 @@ class Play extends Component
         event(new RefreshGame($this->game->id));
     }
 
+    public function cancel()
+    {
+        $this->editMode = false;
+        foreach($this->goals as $index => $goal) {
+            $this->goals[$index]['cards'] = [];
+            $this->selected = [];
+            $this->toPlace = null;
+        }
+    }
+
     public function getMyHand()
     {
         return $this->game->currentRound->stock()
@@ -64,16 +77,11 @@ class Play extends Component
             ->where('location', 'hand')
             ->with('card')
             ->get()
-            ->map(function($stock) {
-                $card = $stock->card;
-                $card->stock_id = $stock->id;
-                return $card;
-            })
             ->when($this->sort !== '', function ($items) {
                 if ($this->sort === 'asc') {
-                    return $items->sortBy('number');
+                    return $items->sortBy('smallCard.number');
                 } else {
-                    return $items->sortByDesc('number');
+                    return $items->sortByDesc('smallCard.number');
                 }
             });
     }
@@ -106,10 +114,35 @@ class Play extends Component
 
     public function place($index)
     {
-        if($this->selected !== null) {
-            $this->goals[$index]['cards'][] = $this->selected;
-            $this->selected = null;
+        if($this->toPlace !== null) {
+            $this->goals[$index]['cards'][] = $this->toPlace;
+            $this->toPlace = null;
         }
+    }
+
+    public function play()
+    {
+        // Validate
+        foreach($this->goals as $index => $goal) {
+            if($goal['min_cards'] > count($goal['cards'])) {
+                $numMissing = $goal['min_cards'] - count($goal['cards']);
+                $cardString = $numMissing === 1 ? 'card' : 'cards';
+                $goalNumber = strtolower(numToOrdinalWord($index + 1));
+                dd("You need {$numMissing} more {$cardString} to complete the {$goalNumber} goal.");
+            }
+        }
+
+        // Create Card Groups
+        foreach($this->goals as $index => $goal) {
+            $group = CardGroup::create(['owner_id' => auth()->id(), 'round_id' => $this->game->currentRound->id]);
+
+            foreach($goal['cards'] as $card) {
+                $this->game->currentRound->move('goal', 'table', $card['id'], $group);
+            }
+        }
+
+        $this->editMode = false;
+        event(new RefreshGame($this->game->id));
     }
 
     public function refreshGame() 
@@ -117,9 +150,16 @@ class Play extends Component
         $this->game = $this->game->fresh();
     }
 
-    public function select($stockId)
+    public function selectToPlace($stockId)
     {
-        $this->selected = $this->game->currentRound->stock->firstWhere('id', $stockId);
+        if($this->toPlace !== null) {
+            $this->selectedCount--;
+            array_pop($this->selected);
+        }
+        
+        $this->selectedCount++;
+        $this->selected[] = $this->game->currentRound->stock->firstWhere('id', $stockId);
+        $this->toPlace = $this->game->currentRound->stock->firstWhere('id', $stockId);
     }
 
     public function sort($way)

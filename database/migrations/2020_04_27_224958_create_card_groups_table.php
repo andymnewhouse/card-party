@@ -10,7 +10,12 @@ class CreateCardGroupsTable extends Migration
     {
         Schema::create('card_groups', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('owner_id');
+            $table->unsignedBigInteger('round_id');
             $table->timestamps();
+
+            $table->foreign('owner_id')->references('id')->on('users');
+            $table->foreign('round_id')->references('id')->on('rounds')->cascadeOnDelete();
         });
     }
 }
