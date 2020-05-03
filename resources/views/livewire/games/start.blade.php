@@ -1,8 +1,7 @@
 <div x-data="{ open: false }" class="relative flex-shrink-0">
     <div>
-        <span class="inline-flex rounded-md shadow-sm">
-            <button @click="open = true"
-                class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
+        <span class="btn-shadow">
+            <button @click="open = true" class="btn btn-base btn-red-primary">
                 Start a New Game
             </button>
         </span>
@@ -29,9 +28,8 @@
                 <option value="{{ $type->id }}">{{ $type->label }}</option>
                 @endforeach
             </select>
-            <span class="ml-4 inline-flex rounded-md shadow-sm">
-                <button type="submit"
-                    class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
+            <span class="ml-4 btn-shadow">
+                <button type="submit" class="btn btn-base btn-blue-gray-primary">
                     Go
                 </button>
             </span>

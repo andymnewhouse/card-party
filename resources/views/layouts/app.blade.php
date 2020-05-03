@@ -22,11 +22,6 @@
 <body class="bg-gray-100">
     @include('layouts.partials.nav')
 
-    @hasSection('header')
-    @yield('header')
-    @else
-    @include('layouts.partials.header')
-    @endif
     <main class="h-full">
         @yield('content')
     </main>

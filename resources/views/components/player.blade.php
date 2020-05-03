@@ -1,7 +1,7 @@
 @props(['user', 'size', 'withoutName'])
 
 @isset($withoutName)
-<img {{ $attributes->merge(['class' => "inline-block h-{$size} w-{$size} rounded-full text-white shadow-solid bg-indigo-600"])}}
+<img {{ $attributes->merge(['class' => "inline-block h-{$size} w-{$size} rounded-full text-white shadow-solid bg-blue-gray-600"])}}
     src="{{ $user->gravatar }}" alt="{{ $user->name }}'s Gravatar" />
 @else
 <div {{ $attributes->merge(['class' => 'text-center']) }}>

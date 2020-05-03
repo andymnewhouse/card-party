@@ -25,7 +25,7 @@
                             <div class="px-4 py-4 flex items-center sm:px-6">
                                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                     <div>
-                                        <div class="text-sm leading-5 font-medium text-blue-gray-600 truncate">
+                                        <div class="text-sm leading-5 font-medium text-red-600 truncate">
                                             {{ $game->game_type->label }}
                                         </div>
                                         <div class="mt-2 flex">

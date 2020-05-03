@@ -13,7 +13,7 @@
     @if(auth()->id() === $game->owner_id)
     <div class="text-center">
         <span class="btn-shadow">
-            <button wire:click="start" class="btn btn-primary btn-xl"
+            <button wire:click="start" class="btn btn-red-primary btn-xl"
                 {{ $players->count() < $game->game_type->min_players ? 'disabled' : '' }}>
                 All Set, Let's Start
             </button>
