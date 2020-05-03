@@ -48,7 +48,7 @@
     <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-green-300">
         <div class="w-full grid grid-cols-6 gap-2" style="transform: rotate(5deg) translateY(-100px);">
             @foreach($cards as $card)
-            <x-card :card="$card" :key="$loop->index" />
+            <x-card :card="$card" :key="$loop->index" class="card" />
             @endforeach
         </div>
     </div>
