@@ -5,6 +5,7 @@ namespace App;
 use Creativeorange\Gravatar\Facades\Gravatar;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -37,7 +38,13 @@ class User extends Authenticatable
         return $this->morphMany(Stock::class, 'model');
     }
 
-    public function getGravatarAttribute() {
+    public function getFirstNameAttribute()
+    {
+        return Str::before($this->name, ' ');
+    }
+
+    public function getGravatarAttribute()
+    {
         return Gravatar::get($this->email);
     }
 

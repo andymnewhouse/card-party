@@ -21,6 +21,7 @@
         "pusher/pusher-php-server": "~4.0",
         "spatie/laravel-model-states": "^1.6",
         "spatie/laravel-schemaless-attributes": "^1.7",
+        "statamic/cms": "^3.0@beta",
         "vinkla/hashids": "^8.1"
     },
     "require-dev": {
@@ -64,7 +65,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan statamic:install --ansi"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

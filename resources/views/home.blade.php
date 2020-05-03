@@ -25,7 +25,7 @@
                             <div class="px-4 py-4 flex items-center sm:px-6">
                                 <div class="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
                                     <div>
-                                        <div class="text-sm leading-5 font-medium text-indigo-600 truncate">
+                                        <div class="text-sm leading-5 font-medium text-blue-gray-600 truncate">
                                             {{ $game->game_type->label }}
                                         </div>
                                         <div class="mt-2 flex">
@@ -87,7 +87,7 @@
                                         <img class="h-6 w-6 rounded-full" src="{{ $friend->gravatar }}" alt="" />
                                     </div>
                                     <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                                        <div class="text-sm leading-5 font-medium text-indigo-600 truncate">
+                                        <div class="text-sm leading-5 font-medium text-blue-gray-600 truncate">
                                             {{ $friend->name }}</div>
                                     </div>
                                 </div>

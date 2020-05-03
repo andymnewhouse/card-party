@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <h2 class="uppercase text-gray-800 text-sm mb-2">{{ auth()->user()->name }} <span
+    <h2 class="uppercase text-gray-800 text-sm mb-2">{{ auth()->user()->firstName }} <span
             class="text-gray-600">({{ count($myHand) }})</span></h2>
 
     <div class="grid grid-cols-6 gap-4">
@@ -28,14 +28,14 @@
         <div>
             @if($iHavePlayed)
             <button type="button" wire:click="hotCard" {{ auth()->id() === $activePlayerId ? 'disabled' : ''}}
-                class="mb-2 block w-full text-center btn btn-xs btn-secondary">🔥HOT CARD!</button>
+                class="mb-2 block w-full text-center btn btn-xs btn-red-secondary">🔥HOT CARD!</button>
             <button type="button" wire:click="playOff" {{ auth()->id() !== $activePlayerId ? 'disabled' : ''}}
-                class="mb-2 block w-full text-center btn btn-xs btn-secondary">Play Off Somone Else</button>
+                class="mb-2 block w-full text-center btn btn-xs btn-red-secondary">Play Off Somone Else</button>
             @else
             <button type="button" wire:click="buy" {{ auth()->id() === $activePlayerId ? 'disabled' : ''}}
-                class="mb-2 block w-full text-center btn btn-xs btn-secondary">Buy</button>
+                class="mb-2 block w-full text-center btn btn-xs btn-blue-gray-secondary">Buy</button>
             <button type="button" wire:click="layDown" {{ auth()->id() !== $activePlayerId ? 'disabled' : ''}}
-                class="mb-2 block w-full text-center btn btn-xs btn-secondary">Lay
+                class="mb-2 block w-full text-center btn btn-xs btn-blue-gray-secondary">Lay
                 Down</button>
             @endif
             <span class="w-full relative z-0 inline-flex shadow-sm">
