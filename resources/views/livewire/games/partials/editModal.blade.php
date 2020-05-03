@@ -25,15 +25,15 @@
             </div>
         </div>
         <div class="mt-5 sm:mt-6 grid grid-cols-2 gap-6">
-            <span class="w-full rounded-md shadow-sm">
+            <span class="w-full btn-shadow">
                 <button type="button" wire:click="cancel"
-                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                    class="inline-flex justify-center w-full btn-base btn-blue-gray-secondary">
                     Cancel
                 </button>
             </span>
-            <span class="w-full rounded-md shadow-sm" wire:click="play">
-                <button type="button"
-                    class="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-indigo-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+            <span class="w-full btn-shadow">
+                <button type="button" wire:click="play"
+                    class="inline-flex justify-center w-full btn-base btn-blue-gray-primary">
                     Play
                 </button>
             </span>

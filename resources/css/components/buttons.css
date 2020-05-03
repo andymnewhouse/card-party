@@ -14,35 +14,67 @@
     }
 }
 
-.btn-primary {
-    @apply text-white bg-indigo-600;
+.btn-blue-gray-primary {
+    @apply text-white bg-blue-gray-600;
 
     &:hover {
-        @apply bg-indigo-500;
+        @apply bg-blue-gray-500;
     }
 
     &:focus {
-        @apply border-indigo-700 shadow-outline-indigo;
+        @apply border-blue-gray-700 shadow-outline-blue;
     }
 
     &:active {
-        @apply bg-indigo-700;
+        @apply bg-blue-gray-700;
     }
 }
 
-.btn-secondary {
-    @apply text-indigo-700 bg-indigo-100;
+.btn-blue-gray-secondary {
+    @apply text-blue-gray-700 bg-blue-gray-100;
 
     &:hover {
-        @apply bg-indigo-50;
+        @apply bg-blue-gray-200;
     }
 
     &:focus {
-        @apply border-indigo-300 shadow-outline-indigo;
+        @apply border-blue-gray-300 shadow-outline-blue;
     }
 
     &:active {
-        @apply bg-indigo-200;
+        @apply bg-blue-gray-200;
+    }
+}
+
+.btn-red-primary {
+    @apply text-white bg-red-600;
+
+    &:hover {
+        @apply bg-red-500;
+    }
+
+    &:focus {
+        @apply border-red-700 shadow-outline-red;
+    }
+
+    &:active {
+        @apply bg-red-700;
+    }
+}
+
+.btn-red-secondary {
+    @apply text-red-700 bg-red-100;
+
+    &:hover {
+        @apply bg-red-200;
+    }
+
+    &:focus {
+        @apply border-red-300 shadow-outline-red;
+    }
+
+    &:active {
+        @apply bg-red-200;
     }
 }
 

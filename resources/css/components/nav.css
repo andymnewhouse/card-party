@@ -1,0 +1,21 @@
+.navbar {
+    .nav-link {
+        @apply acumin px-3 py-2 rounded-md text-sm font-medium leading-5 text-blue-gray-300 transition duration-150 ease-in-out;
+
+        &:hover {
+            @apply text-white bg-blue-gray-700;
+        }
+
+        &:focus {
+            @apply outline-none text-white bg-blue-gray-700;
+        }
+
+        &.active {
+            @apply text-white bg-gray-900;
+        }
+
+        &:not(:first-child) {
+            @apply ml-4;
+        }
+    }
+}

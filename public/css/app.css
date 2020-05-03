@@ -4068,40 +4068,76 @@ video {
     cursor: not-allowed;
   }
 
-.btn-primary {
+.btn-blue-gray-primary {
   color: #ffffff;
-  background-color: #5850ec;
+  background-color: #50536C;
 }
 
-.btn-primary:hover {
-    background-color: #6875f5;
+.btn-blue-gray-primary:hover {
+    background-color: #63667C;
   }
 
-.btn-primary:focus {
-    border-color: #5145cd;
-    box-shadow: 0 0 0 3px rgba(180, 198, 252, 0.45);
+.btn-blue-gray-primary:focus {
+    border-color: #3D405B;
+    box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
   }
 
-.btn-primary:active {
-    background-color: #5145cd;
+.btn-blue-gray-primary:active {
+    background-color: #3D405B;
   }
 
-.btn-secondary {
-  color: #5145cd;
-  background-color: #e5edff;
+.btn-blue-gray-secondary {
+  color: #3D405B;
+  background-color: #E7EAEF;
 }
 
-.btn-secondary:hover {
-    background-color: #f0f5ff;
+.btn-blue-gray-secondary:hover {
+    background-color: #D4D7DE;
   }
 
-.btn-secondary:focus {
-    border-color: #b4c6fc;
-    box-shadow: 0 0 0 3px rgba(180, 198, 252, 0.45);
+.btn-blue-gray-secondary:focus {
+    border-color: #AEB1BD;
+    box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
   }
 
-.btn-secondary:active {
-    background-color: #cddbfe;
+.btn-blue-gray-secondary:active {
+    background-color: #D4D7DE;
+  }
+
+.btn-red-primary {
+  color: #ffffff;
+  background-color: #CE4D4E;
+}
+
+.btn-red-primary:hover {
+    background-color: #F16061;
+  }
+
+.btn-red-primary:focus {
+    border-color: #AB3B3B;
+    box-shadow: 0 0 0 3px rgba(248, 180, 180, 0.45);
+  }
+
+.btn-red-primary:active {
+    background-color: #AB3B3B;
+  }
+
+.btn-red-secondary {
+  color: #AB3B3B;
+  background-color: #F9BAB6;
+}
+
+.btn-red-secondary:hover {
+    background-color: #F7A4A2;
+  }
+
+.btn-red-secondary:focus {
+    border-color: #F58E8C;
+    box-shadow: 0 0 0 3px rgba(248, 180, 180, 0.45);
+  }
+
+.btn-red-secondary:active {
+    background-color: #F7A4A2;
   }
 
 .btn-white {
@@ -4276,6 +4312,122 @@ video {
 
 .instructions-area { grid-area: instructions-area;
 }
+
+.navbar .nav-link {
+    font-family: acumin-pro, sans-serif;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    color: #AEB1BD;
+    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+.navbar .nav-link:hover {
+      color: #ffffff;
+      background-color: #3D405B;
+    }
+
+.navbar .nav-link:focus {
+      outline: 0;
+      color: #ffffff;
+      background-color: #3D405B;
+    }
+
+.navbar .nav-link.active {
+      color: #ffffff;
+      background-color: #161e2e;
+    }
+
+.navbar .nav-link:not(:first-child) {
+      margin-left: 1rem;
+    }
+
+.tekton {
+  font-family: tekton-pro, sans-serif;
+}
+
+.acumin {
+  font-family: acumin-pro, sans-serif;
+}
+
+.text p {
+    font-size: 1rem;
+    color: #6b7280;
+    font-family: acumin-pro, sans-serif;
+  }
+
+@media (min-width: 640px) {
+
+.text p {
+      margin-bottom: 1.25rem;
+
+      font-size: 1.125rem;
+
+      max-width: 36rem;
+
+      margin-left: auto;
+
+      margin-right: auto
+  }
+    }
+
+@media (min-width: 768px) {
+
+.text p {
+      margin-bottom: 1.25rem;
+
+      font-size: 1.25rem
+  }
+    }
+
+@media (min-width: 1024px) {
+
+.text p {
+      margin-left: 0;
+
+      margin-right: 0
+  }
+    }
+
+.text h2 {
+    font-size: 2.25rem;
+    color: #F16061;
+    font-family: tekton-pro, sans-serif;
+    margin-bottom: 2rem;
+  }
+
+.text a:not(.btn) {
+    font-family: acumin-pro, sans-serif;
+    color: #F16061;
+  }
+
+.text a:not(.btn):hover {
+      color: #CE4D4E;
+      text-decoration: underline;
+    }
+
+.text blockquote {
+    border-left-width: 4px;
+    border-color: #F16061;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+.text blockquote p {
+      font-size: 1rem;
+      margin-bottom: 0;
+      color: #892628;
+    }
 
 .sr-only {
   position: absolute;

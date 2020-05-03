@@ -1,22 +1,127 @@
 title: Default
-fields:
-  -
-    handle: content
-    field:
-      type: markdown
-      display: Content
-      localizable: true
-  -
-    handle: author
-    field:
-      type: users
-      display: Author
-      default: current
-      localizable: true
-      max_items: 1
-  -
-    handle: template
-    field:
-      type: template
-      display: Template
-      localizable: true
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: sections
+        field:
+          sets:
+            angled_hero:
+              display: 'Angled Hero'
+              fields:
+                -
+                  handle: bard
+                  field: bard.bard
+            newsletter:
+              display: Newsletter
+              fields:
+                -
+                  handle: uuid
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: 'List UUID'
+                -
+                  handle: header
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: Header
+                -
+                  handle: paragraph
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: Paragraph
+            blog:
+              display: Blog
+              fields:
+                -
+                  handle: header
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: Header
+                -
+                  handle: paragraph
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: Paragraph
+            header:
+              display: Header
+              fields:
+                -
+                  handle: header
+                  field:
+                    mode: grid
+                    container: assets
+                    restrict: false
+                    allow_uploads: true
+                    max_files: 1
+                    type: assets
+                    localizable: false
+                    listable: hidden
+                    display: Header
+                -
+                  handle: text
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: 'Header Text'
+                -
+                  handle: height
+                  field: height.height
+                  config:
+                    options:
+                      h-64: h-64
+                      h-32: h-32
+                      h-screen: Screen
+            content:
+              display: Content
+              fields:
+                -
+                  handle: bard
+                  field: bard.bard
+            reports:
+              display: Reports
+              fields:
+                -
+                  handle: header
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: Header
+                -
+                  handle: paragraph
+                  field:
+                    input_type: text
+                    type: text
+                    localizable: false
+                    listable: hidden
+                    display: Paragraph
+          type: replicator
+          localizable: false
+          listable: hidden
+          display: Sections
+      -
+        handle: template
+        field:
+          type: template
+          display: Template
+          localizable: true

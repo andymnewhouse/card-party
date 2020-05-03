@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Card Party</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://use.typekit.net/tzh4hkx.css">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
+
+<body>
+    {{ template_content }}
+
+    {{ partial:marketing/partials/footer }}
+
+    <!-- Fathom - beautiful, simple website analytics -->
+    <script src="https://cdn.usefathom.com/3.js" site="YFEZDVQK"></script>
+    <!-- / Fathom -->
+</body>
+
+</html>
