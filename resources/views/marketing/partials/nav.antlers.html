@@ -45,10 +45,9 @@
                 </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <a href="/login"
-                    class="acumin px-3 py-2 rounded-md text-sm font-medium leading-5 text-blue-gray-300 hover:text-white hover:bg-blue-gray-700 focus:outline-none focus:text-white focus:bg-blue-gray-700 transition duration-150 ease-in-out">Login</a>
-                <a href="/register"
-                    class="ml-4 acumin px-3 py-2 rounded-md text-sm font-medium leading-5 text-blue-gray-300 hover:text-white hover:bg-blue-gray-700 focus:outline-none focus:text-white focus:bg-blue-gray-700 transition duration-150 ease-in-out">Register</a>
+                {{ nav:auth_nav }}
+                <a href="/login" class="nav-link {{ if is_current }}active{{ /if }}">Login</a>
+                {{ /nav:auth_nav}}
             </div>
         </div>
     </div>

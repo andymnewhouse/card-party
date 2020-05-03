@@ -1,0 +1,8 @@
+title: 'Auth Nav'
+tree:
+  -
+    title: Login
+    url: /login
+  -
+    title: 'Create Account'
+    url: /register
