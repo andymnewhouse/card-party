@@ -44,19 +44,20 @@ class Settings extends Component
 
     public function updateNotifications()
     {
-        if ($this->subscribed) {
-            $this->emailList->subscribe($this->email);
+        if ($this->subscribed !== $this->emailList->isSubscribed($this->email)) {
+            if ($this->subscribed) {
+                $this->emailList->subscribe($this->email);
 
-            $this->emit('notify', ['message' => 'Your email has been successfully added to the newsletter list. Please check your email for the confirmation email.', 'type' => 'success']);
-        } else {
-            $this->emailList->unsubscribe($this->email);
-            $this->emit('notify', ['message' => 'Your email has been successfully removed from the newsletter list.', 'type' => 'success']);
+                $this->emit('notify', ['message' => 'Your email has been successfully added to the newsletter list. Please check your email for the confirmation email.', 'type' => 'success']);
+            } else {
+                $this->emailList->unsubscribe($this->email);
+                $this->emit('notify', ['message' => 'Your email has been successfully removed from the newsletter list.', 'type' => 'success']);
+            }
         }
 
-        $this->user->update([
-            'allow_invites' => $this->allowInvites,
-            'allow_requests' => $this->allowRequests,
-        ]);
+        auth()->user()->allow_invites = $this->allowInvites;
+        auth()->user()->allow_requests = $this->allowRequests;
+        auth()->user()->save();
 
         $this->emit('notify', ['message' => 'Your notification settings have been successfully updated.', 'type' => 'success']);
     }

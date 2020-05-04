@@ -22,6 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'allow_invites' => 'boolean',
+        'allow_requests' => 'boolean',
     ];
 
     public function friends()
