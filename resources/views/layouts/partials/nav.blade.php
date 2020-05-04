@@ -61,8 +61,6 @@
                         class="origin-top-right absolute right-0 z-100 mt-2 w-48 rounded-md shadow-lg">
                         <div class="z-100 py-1 rounded-md bg-white shadow-xs" role="menu" aria-orientation="vertical"
                             aria-labelledby="user-menu">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                role="menuitem">Your Profile</a>
                             <a href="/my/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 role="menuitem">Settings</a>
                             <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
