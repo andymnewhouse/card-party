@@ -19,19 +19,21 @@
         "laravel/ui": "^2.0",
         "livewire/livewire": "^1.0",
         "pusher/pusher-php-server": "~4.0",
+        "spatie/laravel-honeypot": "^2.2",
         "spatie/laravel-model-states": "^1.6",
         "spatie/laravel-schemaless-attributes": "^1.7",
         "statamic/cms": "^3.0@beta",
         "vinkla/hashids": "^8.1"
     },
     "require-dev": {
+        "beyondcode/helo-laravel": "^1.0",
         "facade/ignition": "^2.0",
         "fzaninotto/faker": "^1.9.1",
-        "mockery/mockery": "^1.3.1",
-        "nunomaduro/collision": "^4.1",
-        "phpunit/phpunit": "^8.5",
         "jasonmccreary/laravel-test-assertions": "^1.0",
-        "mpociot/laravel-test-factory-helper": "^2.1"
+        "mockery/mockery": "^1.3.1",
+        "mpociot/laravel-test-factory-helper": "^2.1",
+        "nunomaduro/collision": "^4.1",
+        "phpunit/phpunit": "^8.5"
     },
     "config": {
         "optimize-autoloader": true,

@@ -47,7 +47,7 @@
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 @auth
-                <a href="/home" class="nav-link">Home</a>
+                <a href="/home" class="nav-link {{ isActive('/home') ? 'active' : '' }}">Home</a>
                 <div class="ml-3 relative" x-data="{ open: false }">
                     <div>
                         <button @click="open = true"

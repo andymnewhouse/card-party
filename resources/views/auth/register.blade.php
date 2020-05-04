@@ -6,6 +6,8 @@
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form action="{{ route('register') }}" method="POST">
             @csrf
+            @honeypot
+
             <div>
                 <label for="name" class="form-label">
                     {{ __('Name') }}

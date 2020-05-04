@@ -1,11 +1,12 @@
 @extends('layouts.app', ['title' => 'Login'])
 
 @section('content')
-
 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form action="{{ route('login') }}" method="POST">
             @csrf
+            @honeypot
+
             <div>
                 <label for="email" class="form-label">
                     {{ __('E-Mail Address') }}
@@ -40,17 +41,17 @@
 
             <div class="mt-6 flex items-center justify-between">
                 <div class="flex items-center">
-                    <input id="remember_me" type="checkbox"
+                    <input id="remember_me" type="checkbox" {{ old('remember') ? 'checked' : '' }}
                         class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" />
                     <label for="remember_me" class="ml-2 block text-sm leading-5 text-gray-900">
-                        Remember me
+                        {{ __('Remember Me') }}
                     </label>
                 </div>
 
                 <div class="text-sm leading-5">
-                    <a href="#"
+                    <a href="{{ route('password.request') }}"
                         class="font-medium text-red-600 hover:text-red-500 focus:outline-none focus:underline transition ease-in-out duration-150">
-                        Forgot your password?
+                        {{ __('Forgot Your Password?') }}
                     </a>
                 </div>
             </div>

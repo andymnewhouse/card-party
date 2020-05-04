@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7dd653e4cfe1cc8c7a7328f3d7093d39",
+    "content-hash": "2a0ebfc89a2db39f82a57a3a251249bf",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3972,6 +3972,72 @@
             "time": "2020-02-16T19:18:04+00:00"
         },
         {
+            "name": "spatie/laravel-honeypot",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-honeypot.git",
+                "reference": "5259bfbc5f26e9e92b356245230cec0326bdcd63"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-honeypot/zipball/5259bfbc5f26e9e92b356245230cec0326bdcd63",
+                "reference": "5259bfbc5f26e9e92b356245230cec0326bdcd63",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^7.0",
+                "illuminate/encryption": "^7.0",
+                "illuminate/http": "^7.0",
+                "illuminate/support": "^7.0",
+                "illuminate/validation": "^7.0",
+                "nesbot/carbon": "^2.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0",
+                "spatie/phpunit-snapshot-assertions": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Honeypot\\HoneypotServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Honeypot\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Preventing spam submitted through forms",
+            "homepage": "https://github.com/spatie/laravel-honeypot",
+            "keywords": [
+                "laravel-honeypot",
+                "spatie"
+            ],
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                }
+            ],
+            "time": "2020-04-14T14:35:23+00:00"
+        },
+        {
             "name": "spatie/laravel-model-states",
             "version": "1.6.1",
             "source": {
@@ -6697,6 +6763,63 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "beyondcode/helo-laravel",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/beyondcode/helo-laravel.git",
+                "reference": "dffa1678c36059728df9cb48647efd3d4d46ad4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/beyondcode/helo-laravel/zipball/dffa1678c36059728df9cb48647efd3d4d46ad4a",
+                "reference": "dffa1678c36059728df9cb48647efd3d4d46ad4a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^6.0|^7.0",
+                "illuminate/mail": "^6.0|^7.0",
+                "illuminate/view": "^6.0|^7.0",
+                "php": "^7.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.1",
+                "phpunit/phpunit": "^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "BeyondCode\\HeloLaravel\\HeloLaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BeyondCode\\HeloLaravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marcel Pociot",
+                    "email": "marcel@beyondco.de",
+                    "homepage": "https://beyondcode.de",
+                    "role": "Developer"
+                }
+            ],
+            "description": "HELO Laravel debug helper",
+            "homepage": "https://github.com/beyondcode/helo-laravel",
+            "keywords": [
+                "HELO",
+                "beyondcode"
+            ],
+            "time": "2020-04-24T07:54:10+00:00"
+        },
         {
             "name": "doctrine/cache",
             "version": "1.10.0",
