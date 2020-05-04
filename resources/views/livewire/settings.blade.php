@@ -105,8 +105,8 @@
                 <div class="mt-4">
                     <div class="flex items-start">
                         <div class="absolute flex items-center h-5">
-                            <input id="invites" type="checkbox"
-                                class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" />
+                            <input id="invites" type="checkbox" wire:model="allowInvites"
+                                class="form-checkbox h-4 w-4 text-blue-gray-600 transition duration-150 ease-in-out" />
                         </div>
                         <div class="pl-7 text-sm leading-5">
                             <label for="invites" class="font-medium text-gray-700">Invites</label>
@@ -116,8 +116,8 @@
                     <div class="mt-4">
                         <div class="flex items-start">
                             <div class="absolute flex items-center h-5">
-                                <input id="friend-request" type="checkbox"
-                                    class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" />
+                                <input id="friend-request" type="checkbox" wire:model="allowRequests"
+                                    class="form-checkbox h-4 w-4 text-blue-gray-600 transition duration-150 ease-in-out" />
                             </div>
                             <div class="pl-7 text-sm leading-5">
                                 <label for="friend-request" class="font-medium text-gray-700">Friend Request</label>
@@ -129,7 +129,7 @@
                         <div class="flex items-start">
                             <div class="absolute flex items-center h-5">
                                 <input id="newsletter" type="checkbox"
-                                    class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out" />
+                                    class="form-checkbox h-4 w-4 text-blue-gray-600 transition duration-150 ease-in-out" />
                             </div>
                             <div class="pl-7 text-sm leading-5">
                                 <label for="newsletter" class="font-medium text-gray-700">News</label>

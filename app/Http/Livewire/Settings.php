@@ -6,8 +6,12 @@ use Livewire\Component;
 
 class Settings extends Component
 {
-    public $name;
+    public $allowInvites;
+    public $allowRequests;
     public $email;
+    public $name;
+    public $password;
+    public $password_confirmation;
     public $user;
 
     public function mount()
@@ -15,6 +19,8 @@ class Settings extends Component
         $this->title = 'My Settings';
         $this->name = auth()->user()->name;
         $this->email = auth()->user()->email;
+        $this->allowInvites = auth()->user()->allow_invites;
+        $this->allowRequests = auth()->user()->allow_requests;
         $this->user = auth()->user();
     }
 
@@ -37,6 +43,15 @@ class Settings extends Component
 
     public function updatePassword()
     {
+        $data = $this->validate([
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        $this->password = null;
+        $this->password_confirmation = null;
+
+        $this->user->password = bcrypt($data['password']);
+        $this->user->save();
     }
 
     public function updateProfile()
