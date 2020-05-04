@@ -3,11 +3,12 @@
 namespace App;
 
 use Creativeorange\Gravatar\Facades\Gravatar;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -28,7 +29,7 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'friend_user', 'user_id', 'friend_id');
     }
 
-    public function games() 
+    public function games()
     {
         return $this->belongsToMany(Game::class);
     }
