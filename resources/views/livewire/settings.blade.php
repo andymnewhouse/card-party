@@ -9,41 +9,31 @@
 
             <div class="mt-6 grid grid-cols-6">
                 <div class="col-span-6 sm:col-span-4">
-                    <label for="name" class="form-label">
-                        {{ __('Name') }}
-                    </label>
+                    <label for="name" class="form-label">{{ __('Name') }}</label>
                     <div class="mt-1 rounded-md shadow-sm">
                         <input id="name" type="text" name="name" wire:model="name" autocomplete="name" autofocus
                             class="form-control @error('name') border-red-500 @enderror" />
                     </div>
 
                     @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                    <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="mt-6 col-span-6 sm:col-span-4">
-                    <label for="email" class="form-label">
-                        {{ __('E-Mail Address') }}
-                    </label>
+                    <label for="email" class="form-label">{{ __('E-Mail Address') }}</label>
                     <div class="mt-1 rounded-md shadow-sm">
                         <input id="email" type="email" name="email" wire:model="email" required autocomplete="email"
                             class="form-control @error('email') border-red-500 @enderror" />
                     </div>
 
                     @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                    <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="mt-6 col-span-6 sm:col-span-4">
-                    <label class="form-label">
-                        Photo
-                    </label>
+                    <label class="form-label">Photo</label>
                     <div class="mt-2 flex items-center">
                         <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
                             <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
@@ -76,20 +66,20 @@
 
             <div class="mt-6 grid grid-cols-6">
                 <div class="col-span-6 sm:col-span-4">
-                    <label for="password" class="form-label">
-                        {{ __('Password') }}
-                    </label>
+                    <label for="password" class="form-label">{{ __('Password') }}</label>
                     <div class="mt-1 rounded-md shadow-sm">
                         <input id="password" type="password" name="password" wire:model="password" required
                             autocomplete="new-password"
                             class="form-control @error('password') border-red-500 @enderror" />
                     </div>
+
+                    @error('password')
+                    <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-span-6 sm:col-span-4 mt-6">
-                    <label for="password-confirm" class="form-label">
-                        {{ __('Confirm Password') }}
-                    </label>
+                    <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
                     <div class="mt-1 rounded-md shadow-sm">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
                             wire:model="password_confirmation" required autocomplete="new-password" />
