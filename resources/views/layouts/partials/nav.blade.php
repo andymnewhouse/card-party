@@ -63,6 +63,14 @@
                             aria-labelledby="user-menu">
                             <a href="/my/settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 role="menuitem">Settings</a>
+                            @if(auth()->user()->super)
+                            <a href="/cp" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem">Control Panel</a>
+                            <a href="/mailcoach" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem">Mailcoach</a>
+                            <a href="/horizon" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                role="menuitem">Horizon</a>
+                            @endif
                             <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 href="{{ route('logout') }}"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

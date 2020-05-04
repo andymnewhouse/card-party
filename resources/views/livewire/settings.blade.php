@@ -128,7 +128,7 @@
                     <div class="mt-4">
                         <div class="flex items-start">
                             <div class="absolute flex items-center h-5">
-                                <input id="newsletter" type="checkbox"
+                                <input id="newsletter" type="checkbox" wire:model="subscribed"
                                     class="form-checkbox h-4 w-4 text-blue-gray-600 transition duration-150 ease-in-out" />
                             </div>
                             <div class="pl-7 text-sm leading-5">
