@@ -22,4 +22,24 @@ class Settings extends Component
             'user' => auth()->user()
         ]);
     }
+
+    public function deleteAccount()
+    {
+        auth()->user()->delete();
+        auth()->logout();
+
+        return redirect()->to('/');
+    }
+
+    public function updateNotifications()
+    {
+    }
+
+    public function updatePassword()
+    {
+    }
+
+    public function updateProfile()
+    {
+    }
 }
