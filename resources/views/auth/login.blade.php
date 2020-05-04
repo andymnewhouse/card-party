@@ -17,9 +17,7 @@
                 </div>
 
                 @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -33,9 +31,7 @@
                 </div>
 
                 @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
                 @enderror
             </div>
 

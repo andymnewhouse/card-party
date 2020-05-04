@@ -24,9 +24,7 @@
                 </div>
 
                 @error('email')
-                <span class="text-red-700 mt-1" role="alert">
-                    {{ $message }}
-                </span>
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
                 @enderror
             </div>
 

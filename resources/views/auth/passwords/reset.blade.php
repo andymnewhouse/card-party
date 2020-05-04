@@ -26,9 +26,7 @@
                 </div>
 
                 @error('email')
-                <span class="text-red-700 mt-1" role="alert">
-                    {{ $message }}
-                </span>
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -40,6 +38,10 @@
                     <input id="password" type="password" name="password" required autocomplete="new-password"
                         class="form-control @error('password') border-red-500 @enderror" />
                 </div>
+
+                @error('password')
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mt-6">
