@@ -22,6 +22,7 @@
 <body class="bg-gray-100">
     @include('layouts.partials.nav')
 
+    <livewire:notifications />
     <main class="h-full">
         @yield('content')
     </main>
