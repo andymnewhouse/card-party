@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "aws/aws-sdk-php": "~3.0",
         "calebporzio/sushi": "^2.0",
         "creativeorange/gravatar": "^1.0",
         "driesvints/blade-icons": "^2.2",
@@ -27,7 +28,8 @@
         "spatie/laravel-model-states": "^1.6",
         "spatie/laravel-schemaless-attributes": "^1.7",
         "statamic/cms": "^3.0@beta",
-        "vinkla/hashids": "^8.1"
+        "vinkla/hashids": "^8.1",
+        "wildbit/swiftmailer-postmark": "^3.1"
     },
     "require-dev": {
         "beyondcode/helo-laravel": "^1.0",

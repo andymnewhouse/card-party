@@ -32,7 +32,7 @@
                     @enderror
                 </div>
 
-                <div class="mt-6 col-span-6 sm:col-span-4">
+                {{-- <div class="mt-6 col-span-6 sm:col-span-4">
                     <label class="form-label">Photo</label>
                     <div class="mt-2 flex items-center">
                         <span class="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
@@ -48,7 +48,7 @@
                             </button>
                         </span>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">

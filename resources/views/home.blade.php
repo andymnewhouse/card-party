@@ -69,7 +69,7 @@
                 </ul>
             </div>
         </div>
-        <div>
+        {{-- <div>
             <div class="bg-white shadow overflow-hidden sm:rounded-md">
                 <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
                     <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -85,30 +85,30 @@
                                 <div class="min-w-0 flex-1 flex items-center">
                                     <div class="flex-shrink-0">
                                         <img class="h-6 w-6 rounded-full" src="{{ $friend->gravatar }}" alt="" />
-                                    </div>
-                                    <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
-                                        <div class="text-sm leading-5 font-medium text-blue-gray-600 truncate">
-                                            {{ $friend->name }}</div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    @empty
-                    <li>
-                        No friends yet!
-                    </li>
-                    @endforelse
-                </ul>
-            </div>
-        </div>
     </div>
+    <div class="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
+        <div class="text-sm leading-5 font-medium text-blue-gray-600 truncate">
+            {{ $friend->name }}</div>
+    </div>
+</div>
+<div>
+    <svg class="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd" />
+    </svg>
+</div>
+</div>
+</a>
+</li>
+@empty
+<li>
+    No friends yet!
+</li>
+@endforelse
+</ul>
+</div>
+</div> --}}
+</div>
 </div>
 @endsection
