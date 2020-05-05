@@ -26,7 +26,7 @@ The basic object of the game is to form melds or card combinations on every new 
 
 There are two types of melds in Progressive Rummy: ‘Sets’, and ‘Runs’.
 
-A set (abbreviated as ‘S’) is a combination of three or more cards of the same numer where the suit does not matter.<br>
+A set (abbreviated as ‘S’) is a combination of three or more cards of the same number where the suit does not matter.<br>
 For example, 5 ♥ – 5 ♠ – 5 ♦.
 
 A run (abbreviated as ‘R’) on the other hand is a sequence of four or more consecutive cards all of the same suit.<br>

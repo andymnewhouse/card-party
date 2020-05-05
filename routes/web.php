@@ -1,23 +1,16 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Spatie\Honeypot\ProtectAgainstSpam;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::middleware(ProtectAgainstSpam::class)->group(function () {
+    Auth::routes(['verify' => true]);
+});
 
-Auth::routes();
-
-Route::get('/', 'WelcomeController')->name('welcome');
-Route::get('/home', 'HomeController')->name('home');
-Route::get('/games/start', 'GamesController@create')->name('games.create');
-Route::post('/games', 'GamesController@store')->name('games.store');
-Route::get('/games/{hash}/setup', 'GamesSetupController')->name('games.setup');
-Route::get('/games/{hash}/play', 'GamesPlayController')->name('games.play');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/home', 'HomeController')->name('home');
+    Route::livewire('/my/settings', 'settings')->layout('layouts.app', ['title' => 'My Settings'])->name('settings');
+    Route::get('/games/{hash}/join', 'GamesJoinController')->name('games.join');
+    Route::get('/games/{hash}/play', 'GamesPlayController')->name('games.play');
+});

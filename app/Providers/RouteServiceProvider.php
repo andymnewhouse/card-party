@@ -46,7 +46,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        Route::mailcoach('mailcoach');
+        Route::mailcoachUnlayer('mailcoachUnlayer');
     }
 
     /**

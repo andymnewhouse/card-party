@@ -1,0 +1,124 @@
+.btn-shadow {
+    @apply inline-flex rounded-md shadow-sm;
+}
+
+.btn {
+    @apply inline-flex items-center border border-transparent font-medium transition ease-in-out duration-150;
+
+    &:focus {
+        @apply outline-none;
+    }
+
+    &:disabled {
+        @apply opacity-75 cursor-not-allowed;
+    }
+}
+
+.group-btn {
+    @apply flex-1 items-center border border-transparent font-medium transition ease-in-out duration-150;
+
+    &:focus {
+        @apply outline-none;
+    }
+
+    &:disabled {
+        @apply opacity-75 cursor-not-allowed;
+    }
+}
+
+.btn-blue-gray-primary {
+    @apply text-white bg-blue-gray-600;
+
+    &:hover {
+        @apply bg-blue-gray-500;
+    }
+
+    &:focus {
+        @apply border-blue-gray-700 shadow-outline-blue;
+    }
+
+    &:active {
+        @apply bg-blue-gray-700;
+    }
+}
+
+.btn-blue-gray-secondary {
+    @apply text-blue-gray-700 bg-blue-gray-100;
+
+    &:hover {
+        @apply bg-blue-gray-200;
+    }
+
+    &:focus {
+        @apply border-blue-gray-300 shadow-outline-blue;
+    }
+
+    &:active {
+        @apply bg-blue-gray-200;
+    }
+}
+
+.btn-red-primary {
+    @apply text-white bg-red-600;
+
+    &:hover {
+        @apply bg-red-500;
+    }
+
+    &:focus {
+        @apply border-red-700 shadow-outline-red;
+    }
+
+    &:active {
+        @apply bg-red-700;
+    }
+}
+
+.btn-red-secondary {
+    @apply text-red-700 bg-red-100;
+
+    &:hover {
+        @apply bg-red-200;
+    }
+
+    &:focus {
+        @apply border-red-300 shadow-outline-red;
+    }
+
+    &:active {
+        @apply bg-red-200;
+    }
+}
+
+.btn-white {
+    @apply border-gray-300 text-gray-700 bg-white;
+
+    &:hover {
+        @apply text-gray-500;
+    }
+
+    &:focus {
+        @apply border-blue-300 shadow-outline-blue;
+    }
+
+    &:active,
+    &.active {
+        @apply text-gray-800 bg-blue-100;
+    }
+}
+
+.btn-xs {
+    @apply px-2.5 py-1.5 text-xs leading-4 rounded;
+}
+.btn-sm {
+    @apply px-3 py-2 text-sm leading-4 rounded-md;
+}
+.btn-base {
+    @apply px-4 py-2 text-sm leading-5 rounded-md;
+}
+.btn-lg {
+    @apply px-4 py-2 text-base leading-6 rounded-md;
+}  
+.btn-xl {
+    @apply px-6 py-3 text-base leading-6 rounded-md;
+}

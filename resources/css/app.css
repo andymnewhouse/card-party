@@ -2,50 +2,23 @@
 
 @import "tailwindcss/components";
 
-@import "./components/cards.css";
-@import "./components/forms.css";
-@import "./components/game.css";
+@import "./components/animate";
+@import "./components/buttons";
+@import "./components/cards";
+@import "./components/forms";
+@import "./components/game";
+@import "./components/nav";
+@import "./components/table";
+@import "./components/typography";
 
 @import "tailwindcss/utilities";
 
+[x-cloak] { display: none; }
+
+.bg-gray-transparent {
+    background: rgba(50,50,50,.8);
+}
+
 .table {
     @apply relative mx-auto w-full h-2/3;
-}
-
-.table:before {
-    @apply absolute h-full w-full rounded-t-full bg-green-300 z-0;
-    content: "";
-}
-
-.circle {
-    @apply w-12 h-12 rounded-full bg-blue-600 border-blue-800 border-2 absolute overflow-hidden;
-
-    &.active {
-        @apply border-white bg-indigo-600;
-    }
-}
-
-.circle:nth-child(1) {
-    left: 1.5rem;
-    bottom: 3rem;
-}
-
-.circle:nth-child(2) {
-    left: calc(20% - 1.5rem);
-    top: 6rem;
-}
-
-.circle:nth-child(3) {
-    left: calc(50% - 1.5rem);
-    top: 1.5rem;
-}
-
-.circle:nth-child(4) {
-    right: calc(20% - 1.5rem);
-    top: 6rem;
-}
-
-.circle:nth-child(5) {
-    right: 1.5rem;
-    bottom: 3rem;
 }

@@ -6,6 +6,8 @@
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <form action="{{ route('register') }}" method="POST">
             @csrf
+            @honeypot
+
             <div>
                 <label for="name" class="form-label">
                     {{ __('Name') }}
@@ -16,9 +18,7 @@
                 </div>
 
                 @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
                 @enderror
             </div>
 
@@ -30,6 +30,10 @@
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                         class="form-control @error('email') border-red-500 @enderror" />
                 </div>
+
+                @error('email')
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mt-6">
@@ -40,6 +44,10 @@
                     <input id="password" type="password" name="password" required autocomplete="new-password"
                         class="form-control @error('password') border-red-500 @enderror" />
                 </div>
+
+                @error('password')
+                <span class="text-red-700 mt-1" role="alert">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mt-6">

@@ -1,0 +1,61 @@
+.tekton {
+    font-family: tekton-pro, sans-serif;
+}
+
+.acumin {
+    font-family: acumin-pro, sans-serif;
+}
+
+.text {
+    ul {
+        @apply list-disc ml-6;
+
+        p {
+            @apply mb-0 text-base;
+        }
+    }
+
+    p {
+        @apply text-base text-gray-500 acumin;
+
+        @screen sm {
+            @apply mb-5 text-lg max-w-xl mx-auto;
+        }
+
+        @screen md {
+            @apply mb-5 text-xl;
+        }
+
+        @screen lg {
+            @apply mx-0;
+        }
+    }
+
+    h1 {
+        @apply text-5xl text-red-500 tekton mb-8;
+    }
+
+    h2 {
+        @apply text-4xl text-red-500 tekton mb-8;
+    }
+    
+    h3 {
+        @apply text-2xl text-red-700 tekton mb-4 font-normal;
+    }
+
+    a:not(.btn) {
+        @apply acumin text-red-500;
+    
+        &:hover {
+            @apply text-red-600 underline;
+        }
+    }
+
+    blockquote {
+        @apply border-l-4 border-red-500 pl-4 py-2 my-6;
+
+        p {
+            @apply text-base mb-0 text-red-800;
+        }
+    }
+}

@@ -6,30 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateGamesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('game_type_id');
-            $table->unsignedInteger('num_players');
-            $table->schemalessAttributes('hands');
-            $table->schemalessAttributes('players');
+            $table->unsignedBigInteger('owner_id');
+            $table->unsignedInteger('current_round')->default(0);
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('games');
     }
 }
