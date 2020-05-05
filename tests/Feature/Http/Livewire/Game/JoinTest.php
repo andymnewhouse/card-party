@@ -1,16 +1,12 @@
 <?php
 
-namespace Tests\Feature\Livewire\Game;
+namespace Tests\Feature\Http\Livewire\Game;
 
-use App\Game;
-use App\GameType;
 use App\Http\Livewire\Games\Join;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
-use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * @see \App\Http\Livewire\Games\Join
@@ -26,7 +22,7 @@ class JoinTest extends TestCase
         $becca = factory(User::class)->create(['name' => 'Becca']);
         $dan = factory(User::class)->create(['name' => 'Dan']);
         $pam = factory(User::class)->create(['name' => 'Pam']);
-        
+
         $game = $andy->games()->create(['game_type_id' => 1, 'owner_id' => $andy->id]);
 
         $this->actingAs($andy)->get($game->joinLink);

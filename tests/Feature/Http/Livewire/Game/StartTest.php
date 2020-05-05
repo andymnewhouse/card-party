@@ -1,16 +1,14 @@
 <?php
 
-namespace Tests\Feature\Livewire\Game;
+namespace Tests\Feature\Http\Livewire\Game;
 
 use App\Game;
 use App\GameType;
 use App\Http\Livewire\Games\Start;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
-use Vinkla\Hashids\Facades\Hashids;
 
 /**
  * @see \App\Http\Livewire\Games\Start
@@ -30,7 +28,7 @@ class StartTest extends TestCase
             ->call('create');
 
         $game = Game::whereOwnerId($user->id)->first();
-        
+
         $livewire->assertRedirect($game->joinLink);
         $this->assertTrue($game->players->pluck('id')->contains($user->id));
     }

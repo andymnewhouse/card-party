@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\User;
 use Livewire\Component;
 use Spatie\Mailcoach\Models\EmailList;
 
@@ -36,8 +37,8 @@ class Settings extends Component
 
     public function deleteAccount()
     {
-        auth()->user()->delete();
-        auth()->logout();
+        $user = User::find(auth()->id());
+        $user->delete();
 
         return redirect()->to('/');
     }
