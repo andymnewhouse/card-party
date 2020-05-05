@@ -1,4 +1,8 @@
 module.exports = {
+  purge: [
+    './resources/views/**/*.html',
+    './resources/views/**/*.blade.php'
+  ],
   theme: {
     extend: {
       colors: {
