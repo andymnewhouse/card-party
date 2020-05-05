@@ -27,6 +27,20 @@ fields:
                 localizable: false
                 listable: hidden
                 display: Width
+            -
+              handle: center
+              field:
+                type: toggle
+                localizable: false
+                listable: hidden
+                display: Center
+            -
+              handle: frame
+              field:
+                type: toggle
+                localizable: false
+                listable: hidden
+                display: Frame
         buttons:
           display: Buttons
           fields:

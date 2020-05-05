@@ -25,6 +25,8 @@ bard:
         type: image
         image: andys-family-playing-cards.JPG
         width: w-96
+        center: true
+        frame: true
   -
     type: paragraph
     content:
@@ -52,7 +54,7 @@ bard:
 author: 1
 template: marketing/content
 updated_by: 1
-updated_at: 1588639786
+updated_at: 1588641370
 blueprint: post
 id: 2556a83c-70ae-44f8-b33e-5786e70bbebb
 ---

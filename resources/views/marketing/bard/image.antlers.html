@@ -1,3 +1,4 @@
 <div class="my-6">
-    <img src="{{ image }}" alt="{{ caption }}" class="{{ width }} mx-auto rounded-lg shadow" />
+    <img src="{{ image }}" alt="{{ caption }}"
+        class="{{ width }} {{ center ? 'mx-auto' : '' }} {{ frame ? 'rounded-lg shadow' : '' }}" />
 </div>
