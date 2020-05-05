@@ -7,11 +7,15 @@
             @include('livewire.games.partials.table')
             @include('livewire.games.partials.deckArea')
         </div>
-        @if($editMode)
+        @if($editMode && !$iHavePlayed)
         @include('livewire.games.partials.editModal')
         @endif
+
+        @if($pauseGame)
+        @include('livewire.games.partials.pauseModal')
+        @endif
     </div>
-    <div class="hand-area shadow-lg bg-white">
+    <div class="hand-area shadow-lg bg-white relative">
         @include('livewire.games.partials.handArea')
     </div>
 </div>

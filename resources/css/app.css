@@ -8,9 +8,12 @@
 @import "./components/forms";
 @import "./components/game";
 @import "./components/nav";
+@import "./components/table";
 @import "./components/typography";
 
 @import "tailwindcss/utilities";
+
+[x-cloak] { display: none; }
 
 .bg-gray-transparent {
     background: rgba(50,50,50,.8);

@@ -109,13 +109,13 @@ fields:
           display: Newsletter
           fields:
             -
-              handle: list
+              handle: uuid
               field:
                 input_type: text
                 type: text
                 localizable: false
                 listable: hidden
-                display: List
+                display: 'List UUID'
       buttons:
         - h2
         - h3

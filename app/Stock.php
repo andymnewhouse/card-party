@@ -5,8 +5,8 @@ namespace App;
 use App\States\Deck;
 use App\States\Discard;
 use App\States\Hand;
-use App\States\Table;
 use App\States\LocationState;
+use App\States\Table;
 use App\Transitions\Discarded;
 use App\Transitions\Pickup;
 use App\Transitions\Play;
@@ -28,7 +28,7 @@ class Stock extends Model
             ->allowTransition(Deck::class, Discard::class) // Start Game ✅
             ->allowTransition(Deck::class, Hand::class, Pickup::class) // Pickup ✅
             ->allowTransition(Discard::class, Hand::class, Pickup::class) // Pickup ✅
-            ->allowTransition(Discard::class, Table::class) // Hot Card
+            ->allowTransition(Discard::class, Table::class, Play::class) // Hot Card
             ->allowTransition(Hand::class, Table::class, Play::class) // Playing
             ->allowTransition(Hand::class, Discard::class, Discarded::class) // Discarding ✅
             ->allowTransition(Table::class, Hand::class) // Joker Replace (might want to change from table -> table or table -> limbo)

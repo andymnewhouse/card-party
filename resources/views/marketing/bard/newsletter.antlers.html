@@ -1,5 +1,7 @@
 <div class="px-6 py-6 bg-blue-gray-700 rounded-lg">
-    <form class="sm:flex" method="POST" action="/subscribe/2161ca95-f193-4198-bf58-10ac90323ef6">
+    <form class="sm:flex" method="POST" action="/mailcoach/subscribe/{{ uuid }}">
+        {{ csrf_field }}
+
         <input aria-label=" Email address" type="email" required name="email"
             class="acumin appearance-none w-full px-5 py-3 border border-transparent text-base leading-6 rounded-md text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 transition duration-150 ease-in-out"
             placeholder="Enter your email" />

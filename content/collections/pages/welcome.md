@@ -4,7 +4,7 @@ template: marketing/welcome
 view_model: App\ViewModels\AngledHeroCards
 author: 1
 updated_by: 1
-updated_at: 1588527941
+updated_at: 1588702904
 sections:
   -
     bard:
@@ -24,6 +24,8 @@ sections:
             type: image
             image: logo-fire-opal.svg
             width: w-64
+            center: false
+            frame: false
       -
         type: paragraph
         content:
@@ -53,7 +55,7 @@ sections:
     type: angled_hero
     enabled: true
   -
-    uuid: 22e29b0d-68da-4a97-8e8d-fa9b255aea6f
+    uuid: cb195fe9-9038-42ff-90b5-1e81ad8f1fcf
     header: 'Sign up for our newsletter'
     paragraph: 'Stay up to date on progress and be the first to know when we launch!'
     type: newsletter

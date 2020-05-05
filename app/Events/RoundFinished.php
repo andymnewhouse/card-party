@@ -3,24 +3,19 @@
 namespace App\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class LetsPlay implements ShouldBroadcast
+class RoundFinished
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $gameId;
+    public $userId;
 
-    public function __construct($gameId)
+    public function __construct($gameId, $userId)
     {
         $this->gameId = $gameId;
-    }
-
-    public function broadcastOn()
-    {
-        return new PrivateChannel('games.'.$this->gameId);
+        $this->userId = $userId;
     }
 }

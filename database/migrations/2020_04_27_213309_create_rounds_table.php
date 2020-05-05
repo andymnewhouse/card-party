@@ -16,6 +16,7 @@ class CreateRoundsTable extends Migration
             $table->json('goals')->nullable();
             $table->boolean('has_started')->default(false);
             $table->boolean('has_finished')->default(false);
+            $table->json('scores')->nullable();
             $table->timestamps();
 
             $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');

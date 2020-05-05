@@ -4068,6 +4068,26 @@ video {
     cursor: not-allowed;
   }
 
+.group-btn {
+  flex: 1 1 0%;
+  align-items: center;
+  border-width: 1px;
+  border-color: transparent;
+  font-weight: 500;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.group-btn:focus {
+    outline: 0;
+  }
+
+.group-btn:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+
 .btn-blue-gray-primary {
   color: #ffffff;
   background-color: #50536C;
@@ -4155,9 +4175,10 @@ video {
     box-shadow: 0 0 0 3px rgba(164, 202, 254, 0.45);
   }
 
-.btn-white:active {
+.btn-white:active,
+    .btn-white.active {
     color: #252f3f;
-    background-color: #f9fafb;
+    background-color: #e1effe;
   }
 
 .btn-xs {
@@ -4349,6 +4370,49 @@ video {
       margin-left: 1rem;
     }
 
+.table {
+  min-width: 100%;
+}
+
+.table th {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom-width: 1px;
+    border-color: #e5e7eb;
+    background-color: #f9fafb;
+    text-align: left;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+.table tbody {
+    background-color: #ffffff;
+  }
+
+.table td {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    white-space: nowrap;
+    border-bottom-width: 1px;
+    border-color: #e5e7eb;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: #161e2e;
+  }
+
+.table tfoot {
+    background-color: #f9fafb;
+  }
+
 .tekton {
   font-family: tekton-pro, sans-serif;
 }
@@ -4356,6 +4420,16 @@ video {
 .acumin {
   font-family: acumin-pro, sans-serif;
 }
+
+.text ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+  }
+
+.text ul p {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
 
 .text p {
     font-size: 1rem;
@@ -4396,11 +4470,26 @@ video {
   }
     }
 
+.text h1 {
+    font-size: 3rem;
+    color: #F16061;
+    font-family: tekton-pro, sans-serif;
+    margin-bottom: 2rem;
+  }
+
 .text h2 {
     font-size: 2.25rem;
     color: #F16061;
     font-family: tekton-pro, sans-serif;
     margin-bottom: 2rem;
+  }
+
+.text h3 {
+    font-size: 1.5rem;
+    color: #AB3B3B;
+    font-family: tekton-pro, sans-serif;
+    margin-bottom: 1rem;
+    font-weight: 400;
   }
 
 .text a:not(.btn) {
@@ -45541,6 +45630,9 @@ video {
 
 .duration-1000 {
   transition-duration: 1000ms;
+}
+
+[x-cloak] { display: none;
 }
 
 .bg-gray-transparent {

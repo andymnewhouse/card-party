@@ -9,8 +9,14 @@ class GamesPlayController extends Controller
 {
     public function __invoke($hash)
     {
+        $game = Game::whereId(Hashids::decode($hash))->first();
+
+        if ($game->rounds->isEmpty()) {
+            return redirect(route('games.join', $hash));
+        }
+
         return view('games.play', [
-            'game' => Game::whereId(Hashids::decode($hash))->first(),
+            'game' => $game,
         ]);
     }
 }

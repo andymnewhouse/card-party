@@ -51,10 +51,11 @@ bard:
       values:
         type: newsletter
         list: Newsletter
+        uuid: cb195fe9-9038-42ff-90b5-1e81ad8f1fcf
 author: 1
 template: marketing/content
 updated_by: 1
-updated_at: 1588641370
+updated_at: 1588703013
 blueprint: post
 id: 2556a83c-70ae-44f8-b33e-5786e70bbebb
 ---

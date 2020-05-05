@@ -27,7 +27,7 @@
         </div>
         <div>
             @if($iHavePlayed)
-            <button type="button" wire:click="hotCard" {{ auth()->id() === $activePlayerId ? 'disabled' : ''}}
+            <button type="button" wire:click="hotCard"
                 class="mb-2 block w-full text-center btn btn-xs btn-red-secondary">🔥HOT CARD!</button>
             <button type="button" wire:click="playOff" {{ auth()->id() !== $activePlayerId ? 'disabled' : ''}}
                 class="mb-2 block w-full text-center btn btn-xs btn-red-secondary">Play Off Somone Else</button>
@@ -40,14 +40,31 @@
             @endif
             <span class="w-full relative z-0 inline-flex shadow-sm">
                 <button type="button" wire:click="sort('asc')"
-                    class="flex-1 relative text-center items-center px-2.5 py-1.5 rounded-l border border-gray-300 bg-white text-xs leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                    2 -> A
+                    class="relative group-btn btn-xs rounded-r-none btn-white {{ $sort == 'asc' ? 'active' : '' }}">
+                    2 ➜ A
                 </button>
                 <button type="button" wire:click="sort('desc')"
-                    class="-ml-px flex-1 relative text-center items-center px-2.5 py-1.5 rounded-r border border-gray-300 bg-white text-xs leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
-                    A -> 2
+                    class="-ml-px relative group-btn btn-xs rounded-none btn-white {{ $sort === 'desc' ? 'active' : '' }}">
+                    A ➜ 2
+                </button>
+                <button type="button" wire:click="toggleGroup"
+                    class="-ml-px relative group-btn btn-xs rounded-l-none btn-white {{ $group ? 'active' : '' }}">
+                    ♠︎♥︎♣︎♦︎
                 </button>
             </span>
         </div>
     </div>
 </div>
+<x-popup>
+    <x-slot name="button">
+        <span class="btn-shadow absolute top-0 right-0 mt-2">
+            <button class="btn btn-base btn-blue-gray-primary rounded-r-none" @click="open = true">
+                <x:heroicon-o-chart-bar class="w-6 h-6" />
+                <span class="sr-only">Scores</span>
+            </button>
+        </span>
+    </x-slot>
+
+    <h2 class="tekton text-xl mb-2">Scores</h2>
+    <x-tables.scores :players="$players" :scores="$scores" />
+</x-popup>

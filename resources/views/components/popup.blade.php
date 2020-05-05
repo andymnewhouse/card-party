@@ -1,4 +1,4 @@
-<div x-data="{ open: false }">
+<div x-data="{ open: false }" x-cloak>
     {{ $button }}
 
     <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-300"

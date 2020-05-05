@@ -15,6 +15,7 @@ class Round extends Model
         'goals' => 'collection',
         'has_started' => 'boolean',
         'has_finished' => 'boolean',
+        'scores' => 'collection',
     ];
 
     public function cardGroups()
@@ -31,7 +32,7 @@ class Round extends Model
     {
         return $this->hasMany(Stock::class);
     }
-    
+
     public function activePlayer()
     {
         return $this->belongsTo(User::class, 'active_player_id');
@@ -39,18 +40,23 @@ class Round extends Model
 
     public function move($from, $to, $stockId = null, $group = null)
     {
-        if($from === 'deck' && $to === 'discard') {
+        if ($from === 'deck' && $to === 'discard') {
             $this->stock->firstWhere('location', 'deck')->location->transitionTo(Discard::class);
-        } else if($from === 'deck' && $to === 'hand') {
+        } elseif ($from === 'deck' && $to === 'hand') {
             $this->stock->firstWhere('location', 'deck')->location->transitionTo(Hand::class, auth()->user());
-        } else if($from === 'discard' && $to === 'hand') {
+        } elseif ($from === 'discard' && $to === 'hand') {
             $this->stock->where('location', 'discard')->sortBy('updated_at')->reverse()->first()->location->transitionTo(Hand::class, auth()->user());
-        } else if($to === 'hand') {
+        } elseif ($to === 'hand') {
             $this->stock->firstWhere('id', $stockId)->location->transitionTo(Hand::class, auth()->user());
-        } else if($to === 'discard') {
+        } elseif ($to === 'discard') {
             $this->stock->firstWhere('id', $stockId)->location->transitionTo(Discard::class, auth()->user());
-            $this->nextPlayer();
-        } else if ($to === 'table') {
+
+            if ($group !== 'hotcard') {
+                $this->nextPlayer();
+            }
+        } elseif ($from === 'discard' && $to === 'table') {
+            $this->stock->where('location', 'discard')->sortBy('updated_at')->reverse()->first()->location->transitionTo(Table::class, $group);
+        } elseif ($to === 'table') {
             $this->stock->firstWhere('id', $stockId)->location->transitionTo(Table::class, $group);
         }
     }
@@ -60,8 +66,8 @@ class Round extends Model
         $players = $this->game->players;
         $currentIndex = 0;
 
-        foreach($players as $index => $player) {
-            if($player->id === $this->active_player_id) {
+        foreach ($players as $index => $player) {
+            if ($player->id === $this->active_player_id) {
                 $currentIndex = $index;
                 continue;
             }

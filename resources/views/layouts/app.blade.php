@@ -25,6 +25,7 @@
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://use.typekit.net/tzh4hkx.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @livewireStyles
 </head>
