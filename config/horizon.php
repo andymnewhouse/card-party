@@ -172,14 +172,6 @@ return [
                 'processes' => 10,
                 'tries' => 1,
             ],
-            'mailcoach' => [
-                'connection' => 'mailcoach-redis',
-                'queue' => ['send-campaign', 'send-mail', 'mailcoach-feedback', 'mailcoach'],
-                'balance' => 'auto',
-                'processes' => 3,
-                'tries' => 1,
-                'timeout' => 60 * 60,
-            ],
         ],
 
         'local' => [
@@ -189,14 +181,6 @@ return [
                 'balance' => 'simple',
                 'processes' => 3,
                 'tries' => 1,
-            ],
-            'mailcoach' => [
-                'connection' => 'mailcoach-redis',
-                'queue' => ['send-campaign', 'send-mail', 'mailcoach-feedback', 'mailcoach'],
-                'balance' => 'auto',
-                'processes' => 3,
-                'tries' => 1,
-                'timeout' => 60 * 60,
             ],
         ],
     ],

@@ -23,8 +23,6 @@
         "livewire/livewire": "^1.0",
         "pusher/pusher-php-server": "~4.0",
         "spatie/laravel-honeypot": "^2.2",
-        "spatie/laravel-mailcoach": "^2.0.0",
-        "spatie/laravel-mailcoach-unlayer": "^1.0",
         "spatie/laravel-model-states": "^1.6",
         "spatie/laravel-schemaless-attributes": "^1.7",
         "statamic/cms": "^3.0@beta",
@@ -87,9 +85,6 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "post-update-cmd": [
-            "@php artisan vendor:publish --tag mailcoach-assets --force"
         ]
     }
 }
