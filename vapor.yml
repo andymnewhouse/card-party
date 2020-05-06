@@ -4,6 +4,7 @@ environments:
     production:
         memory: 1024
         cli-memory: 512
+        database: cardparty
         runtime: php-7.4
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
@@ -12,6 +13,7 @@ environments:
     staging:
         memory: 1024
         cli-memory: 512
+        database: cardparty
         runtime: php-7.4
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
