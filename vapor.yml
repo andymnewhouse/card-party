@@ -14,6 +14,7 @@ environments:
         memory: 1024
         cli-memory: 512
         database: cardparty
+        cache: cardparty
         runtime: php-7.4
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
