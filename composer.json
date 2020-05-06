@@ -19,6 +19,7 @@
         "laravel/horizon": "^4.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
+        "laravel/vapor-core": "^2.5",
         "livewire/livewire": "^1.0",
         "pusher/pusher-php-server": "~4.0",
         "spatie/laravel-honeypot": "^2.2",
