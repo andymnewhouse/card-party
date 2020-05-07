@@ -5,11 +5,14 @@ namespace App;
 use App\States\Deck;
 use App\States\Discard;
 use App\States\Hand;
+use App\States\JokerPile;
 use App\States\LocationState;
 use App\States\Table;
 use App\Transitions\Discarded;
 use App\Transitions\Pickup;
 use App\Transitions\Play;
+use App\Transitions\PlayJoker;
+use App\Transitions\ReplaceJoker;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStates\HasStates;
 
@@ -31,7 +34,8 @@ class Stock extends Model
             ->allowTransition(Discard::class, Table::class, Play::class) // Hot Card
             ->allowTransition(Hand::class, Table::class, Play::class) // Playing
             ->allowTransition(Hand::class, Discard::class, Discarded::class) // Discarding ✅
-            ->allowTransition(Table::class, Hand::class) // Joker Replace (might want to change from table -> table or table -> limbo)
+            ->allowTransition(Table::class, JokerPile::class, ReplaceJoker::class) // Replacing Joker
+            ->allowTransition(JokerPile::class, Table::class, PlayJoker::class) // Playing Joker
             ->default(Deck::class);
     }
 

@@ -30,3 +30,11 @@ if (! function_exists('isActive')) {
         return Str::startsWith(url()->current(), $url);
     }
 }
+
+if (! function_exists('missingNumber')) {
+    function missingNumber($list)
+    {
+        $new = range(min($list), max($list));
+        return array_diff($new, $list);
+    }
+}

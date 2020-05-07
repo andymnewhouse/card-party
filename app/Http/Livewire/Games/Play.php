@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Games;
 use App\CardGroup;
 use App\Events\GameStarted;
 use App\Events\HotCard;
+use App\Events\HotCardEnded;
 use App\Events\RefreshGame;
 use App\Events\RoundFinished;
 use Illuminate\Support\Str;
@@ -46,6 +47,7 @@ class Play extends Component
         return [
             "echo-private:games.{$this->gameId},GameStarted" => 'refreshGame',
             "echo-private:games.{$this->gameId},HotCard" => 'hotCardCalled',
+            "echo-private:games.{$this->gameId},HotCardEnded" => 'hotCardEnded',
             "echo-private:games.{$this->gameId},RefreshGame" => 'refreshGame',
         ];
     }
@@ -169,6 +171,13 @@ class Play extends Component
         }
     }
 
+    public function hotCardEnded()
+    {
+        $this->pauseGame = false;
+        $this->pauseGameReason = null;
+        $this->refreshGame();
+    }
+
     public function layDown()
     {
         $this->editMode = true;
@@ -193,7 +202,7 @@ class Play extends Component
                 $this->game->currentRound->move($from, $to, $stockId, $group);
             } elseif ($to === 'discard') {
                 $this->game->currentRound->move($from, $to, $stockId, 'hotcard');
-                event(new RefreshGame($this->game->id));
+                event(new HotCardEnded($this->game->id));
             }
         } else {
             $this->emit('notify', ['message' => 'You cannot move a card right now, it is not your turn', 'type' => 'error']);
@@ -224,7 +233,8 @@ class Play extends Component
 
         // Create Card Groups
         foreach ($this->goals as $index => $goal) {
-            $group = CardGroup::create(['owner_id' => auth()->id(), 'round_id' => $this->game->currentRound->id]);
+            $type = Str::contains($goal['label'], 'set') ? 'set' : 'run';
+            $group = CardGroup::create(['owner_id' => auth()->id(), 'round_id' => $this->game->currentRound->id, 'type' => $type]);
 
             foreach ($goal['cards'] as $card) {
                 $this->game->currentRound->move('goal', 'table', $card['id'], $group);
