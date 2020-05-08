@@ -5,7 +5,6 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -37,7 +36,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'flare'],
             'ignore_exceptions' => false,
         ],
 
@@ -60,6 +59,10 @@ return [
             'username' => 'Laravel Log',
             'emoji' => ':boom:',
             'level' => 'critical',
+        ],
+
+        'flare' => [
+            'driver' => 'flare',
         ],
 
         'papertrail' => [
@@ -100,5 +103,4 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
     ],
-
 ];

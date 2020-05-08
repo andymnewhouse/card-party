@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use App\User;
 use Livewire\Component;
-use Spatie\Mailcoach\Models\EmailList;
 
 class Settings extends Component
 {
@@ -25,8 +24,6 @@ class Settings extends Component
         $this->email = auth()->user()->email;
         $this->allowInvites = auth()->user()->allow_invites;
         $this->allowRequests = auth()->user()->allow_requests;
-        $this->emailList = EmailList::firstWhere('name', 'Newsletter');
-        $this->subscribed = $this->emailList->isSubscribed($this->email);
         $this->user = auth()->user();
     }
 

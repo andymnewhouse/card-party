@@ -9,7 +9,7 @@ class AddTypeToCardGroup extends Migration
     public function up()
     {
         Schema::table('card_groups', function (Blueprint $table) {
-            $table->string('type')->after('round_id');
+            $table->string('type')->after('round_id')->nullable();
         });
     }
 }
