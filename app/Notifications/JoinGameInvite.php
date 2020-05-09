@@ -11,10 +11,13 @@ class JoinGameInvite extends Notification
     use Queueable;
 
     public $game;
+    public $message;
 
-    public function __construct($game)
+    public function __construct($game, $user = null, $message = null)
     {
         $this->game = $game;
+        $this->user = $user;
+        $this->message = $message;
     }
 
     public function via($notifiable)
@@ -22,31 +25,23 @@ class JoinGameInvite extends Notification
         return ['mail'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
-     */
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('You have been invited to a Card Party!')
+            ->subject($this->getSubject())
             ->markdown('mail.join-invite', [
-                'url' => $this->game->joinLInk
+                'url' => $this->game->joinLInk,
+                'firstName' => $this->user->firstName ?? 'Someone',
+                'message' => $this->message,
             ]);
     }
 
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
+    private function getSubject()
     {
-        return [
-            //
-        ];
+        if ($this->user) {
+            return $this->user->firstName.' invited you to a Card Party!';
+        } else {
+            return 'You have been invited to a Card Party!';
+        }
     }
 }
