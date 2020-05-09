@@ -10,6 +10,8 @@ environments:
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
             - 'php artisan event:cache'
+        deploy:
+            - 'php artisan migrate --force'
         domain: app.cardparty.games
     staging:
         memory: 1024
@@ -20,4 +22,6 @@ environments:
         build:
             - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
             - 'php artisan event:cache'
+        deploy:
+            - 'php artisan migrate --force'
         domain: staging.cardparty.games
