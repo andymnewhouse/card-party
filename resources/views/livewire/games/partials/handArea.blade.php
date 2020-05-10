@@ -18,7 +18,7 @@
                 </button>
                 @endif
                 @else
-                <button type="button" wire:click="move('hand', 'discard', {{ $stock->id }})" class="card">
+                <button type="button" wire:click="discard({{ $stock->id }})" class="card">
                     <x-card :card="$stock->smallCard" />
                 </button>
                 @endif

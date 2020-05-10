@@ -2,11 +2,12 @@
     <div
         class="bg-white rounded-lg px-4 pt-5 pb-4 overflow-hidden shadow-xl transform transition-all sm:max-w-2xl sm:w-full sm:p-6">
         <div>
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">
                 {{ $pauseGameReason }}
             </h3>
 
-            @if($roundOver && $finishedTabulating === null)
+            @if($roundOver)
+            @if($finishedTabulating === null)
             <p class="leading-5 text-gray-500">
                 Tabulating Scores ....
             </p>
@@ -21,6 +22,7 @@
                     </button>
                 </span>
             </div>
+            @endif
             @endif
             @endif
         </div>

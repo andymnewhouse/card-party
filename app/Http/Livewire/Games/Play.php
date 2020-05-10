@@ -8,6 +8,7 @@ use App\Events\HotCard;
 use App\Events\HotCardEnded;
 use App\Events\RefreshGame;
 use App\Events\RoundFinished;
+use App\Events\StartNextRound;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -49,6 +50,7 @@ class Play extends Component
             "echo-private:games.{$this->gameId},HotCard" => 'hotCardCalled',
             "echo-private:games.{$this->gameId},HotCardEnded" => 'hotCardEnded',
             "echo-private:games.{$this->gameId},RefreshGame" => 'refreshGame',
+            "echo-private:games.{$this->gameId},StartNextRound" => 'refreshPage',
         ];
     }
 
@@ -59,17 +61,19 @@ class Play extends Component
         }
 
         return view('livewire.games.play', [
+            'activePlayerId' => $this->game->currentRound->activePlayer->id,
             'deck' => $this->game->currentRound->stock->where('location', 'deck'),
-            'finishedTabulating' => $this->game->currentRound->scores !== null,
-            'scores' => $this->game->rounds->where('scores', '!=', null),
-            'table' => $this->game->currentRound->cardGroups->load('stock', 'owner'),
             'discard' => $this->game->currentRound->stock->where('location', 'discard')->sortBy('updated_at')->reverse(),
+            'editMode' => $this->editMode,
+            'finishedTabulating' => $this->game->currentRound->scores !== null,
+            'goalsLabel' => $this->getGoalsLabel(),
+            'iHavePlayed' => $this->game->currentRound->cardGroups->pluck('owner_id')->contains(auth()->id()),
             'instructions' => $this->getInstructions(),
             'myHand' => $this->getMyHand(),
-            'needsToDiscard' => $this->getNeedsToDiscard($this->getMyHand()),
+            'needsToDiscard' => $this->game->currentRound->has_pickedup,
             'players' => $this->getPlayersWithCardsInHand($this->game->players),
-            'activePlayerId' => $this->game->currentRound->activePlayer->id,
-            'iHavePlayed' => $this->game->currentRound->cardGroups->pluck('owner_id')->contains(auth()->id()),
+            'scores' => $this->game->rounds->where('scores', '!=', null),
+            'table' => $this->game->currentRound->cardGroups->load('stock', 'owner'),
         ]);
     }
 
@@ -78,7 +82,7 @@ class Play extends Component
         $this->game->currentRound->move('discard', 'hand');
         $this->game->currentRound->move('deck', 'hand');
         $this->game->currentRound->move('deck', 'hand');
-        event(new RefreshGame($this->game->id));
+        event(new RefreshGame($this->game->id, auth()->user()->firstName.' bought.'));
     }
 
     public function cancel()
@@ -89,6 +93,32 @@ class Play extends Component
             $this->selected = [];
             $this->toPlace = null;
         }
+    }
+
+    public function discard($id)
+    {
+        if (! $this->hotCardEditMode) {
+            if ($this->game->currentRound->activePlayer->id !== auth()->id()) {
+                return $this->notify('error', 'You cannot pickup a card right now, it is not your turn');
+            }
+            if (! $this->game->currentRound->has_pickedup) {
+                return $this->notify('error', 'You cannot discard a card right now, you still need to pick up.');
+            }
+        }
+
+        $this->game->currentRound->move('hand', 'discard', $id);
+        $this->game->currentRound->has_pickedup = false;
+        $this->game->currentRound->save();
+        if ($this->hotCardEditMode) {
+            event(new HotCardEnded($this->game->id, auth()->user()->firstName.' discarded after playing a hot card.'));
+        } else {
+            event(new RefreshGame($this->game->id, auth()->user()->firstName.' discarded.'));
+        }
+    }
+
+    public function getGoalsLabel()
+    {
+        return collect($this->goals)->pluck('label')->join(', ');
     }
 
     public function getInstructions()
@@ -209,6 +239,26 @@ class Play extends Component
         }
     }
 
+    public function notify($type, $message)
+    {
+        $this->emit('notify', ['message' => $message, 'type' => $type]);
+    }
+
+    public function pickup($location)
+    {
+        if ($this->game->currentRound->activePlayer->id !== auth()->id()) {
+            return $this->notify('error', 'You cannot pickup a card right now, it is not your turn.');
+        }
+        if ($this->game->currentRound->has_pickedup) {
+            return $this->notify('error', 'You have already picked up, you need to discard.');
+        }
+
+        $this->game->currentRound->move($location, 'hand');
+        $this->game->currentRound->has_pickedup = true;
+        $this->game->currentRound->save();
+        event(new RefreshGame($this->game->id, auth()->user()->firstName.' picked up a card.'));
+    }
+
     public function place($index)
     {
         if ($this->toPlace !== null) {
@@ -250,14 +300,19 @@ class Play extends Component
         $this->editMode = true;
     }
 
-    public function refreshGame()
+    public function refreshGame($params)
     {
         $this->game = $this->game->fresh();
-        $this->emit('notify', ['message' => 'Refreshed Game', 'type' => 'success']);
+        $this->notify('success', $params['message'] ?? 'Refreshed Game');
 
         if ($this->game->currentRound->has_finished) {
             $this->setRoundFinishedPause();
         }
+    }
+
+    public function refreshPage()
+    {
+        return redirect()->to($this->game->playLink);
     }
 
     public function selectToPlace($stockId)
@@ -276,7 +331,7 @@ class Play extends Component
     {
         $this->pauseGame = true;
         $this->roundOver = true;
-        $this->pauseGameReason = 'Someone is out.';
+        $this->pauseGameReason = 'Round is Over';
     }
 
     public function sort($way)
@@ -291,7 +346,7 @@ class Play extends Component
 
         $this->game->currentRound->move('deck', 'discard');
 
-        event(new GameStarted($this->game->id));
+        event(new GameStarted($this->game->id, auth()->user()->firstName));
     }
 
     public function startNextRound()
@@ -309,7 +364,7 @@ class Play extends Component
         $this->game->current_round = $rounds[$currentIndex + 1]->id;
         $this->game->save();
 
-        event(new RefreshGame($this->game->id));
+        event(new StartNextRound($this->game->id));
     }
 
     public function toggleGroup()

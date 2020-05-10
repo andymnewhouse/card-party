@@ -8,17 +8,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class GameStarted implements ShouldBroadcast
+class StartNextRound implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $gameId;
     public $message;
 
-    public function __construct($gameId, $firstName)
+    public function __construct($gameId)
     {
         $this->gameId = $gameId;
-        $this->message = $firstName.' flipped over the top card to start the game.';
+        $this->message = 'New round started.';
     }
 
     public function broadcastOn()

@@ -17,7 +17,7 @@
                     <p class="text-gray-500 text-xs italic mb-2"> {{ $goal['label' ]}}</p>
                     <div class="flex hand">
                         @foreach($goal['cards'] as $cardIndex => $stock)
-                        <x-card class="card" :card="$stock['small_card']" :key="$cardIndex" disabled />
+                        <x-card-sm :card="$stock['small_card']" :key="$cardIndex" disabled />
                         @endforeach
                     </div>
                 </div>
