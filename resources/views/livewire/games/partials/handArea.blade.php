@@ -18,9 +18,17 @@
                 </button>
                 @endif
                 @else
+
+                @isset($stock->newest)
+                <button type="button" wire:click="discard({{ $stock->id }})" class="card bg-blue-gray-100">
+                    <x-card :card="$stock->smallCard" />
+                </button>
+                @else
                 <button type="button" wire:click="discard({{ $stock->id }})" class="card">
                     <x-card :card="$stock->smallCard" />
                 </button>
+                @endif
+
                 @endif
                 @endforeach
             </div>

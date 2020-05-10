@@ -40,6 +40,21 @@ class Game extends Model
         return route('games.play', Hashids::encode($this->id));
     }
 
+    public function startNextRound()
+    {
+        $rounds = $this->game->rounds;
+        $currentIndex = 0;
+
+        foreach ($rounds as $index => $round) {
+            if ($round->id === $this->game->current_round) {
+                $currentIndex = $index;
+                continue;
+            }
+        }
+
+        $this->startRound($currentIndex + 1);
+    }
+
     public function startRound($index)
     {
         $type = $this->game_type;
