@@ -36,14 +36,14 @@ class Join extends Component
         return redirect($this->game->playLink);
     }
 
-    public function refreshGame() 
+    public function refreshGame()
     {
         $this->game = $this->game->fresh();
     }
 
     public function start()
     {
-        $this->game->start();
+        $this->game->startRound(0);
         event(new LetsPlay($this->game->id));
 
         return redirect($this->game->playLink);

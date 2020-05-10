@@ -361,8 +361,7 @@ class Play extends Component
             }
         }
 
-        $this->game->current_round = $rounds[$currentIndex + 1]->id;
-        $this->game->save();
+        $this->game->startRound($currentIndex + 1);
 
         event(new StartNextRound($this->game->id));
     }

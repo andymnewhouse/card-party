@@ -3,8 +3,8 @@
 namespace App;
 
 use App\States\Hand;
-use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Database\Eloquent\Model;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Game extends Model
 {
@@ -40,40 +40,40 @@ class Game extends Model
         return route('games.play', Hashids::encode($this->id));
     }
 
-    public function start() 
+    public function startRound($index)
     {
         $type = $this->game_type;
         $players = $this->players;
 
-        foreach($type->rounds as $index => $round) {
-            $activePlayer = $players[$index] ?? $players[$index-$players->count()];
-            $gameRound = $this->rounds()->create([
-                'num_cards' => $round['num_cards'], 
-                'active_player_id' => $activePlayer->id,
-                'goals' => $round['goals'],
-            ]);
+        $round = $type->rounds[$index];
 
-            if($index === 0) {
-                $this->current_round = $gameRound->id;
-                $this->save();
-            }
+        $activePlayer = $players[$index] ?? $players[$index - $players->count()] ?? $players[$index - $players->count() - $players->count()];
+        $gameRound = $this->rounds()->create([
+            'num_cards' => $round['num_cards'],
+            'active_player_id' => $activePlayer->id,
+            'goals' => $round['goals'],
+        ]);
 
-            // generate stock for round
-            $gameRound->stock()->createMany( 
-                (new Deck(round($players->count()/2), 'normal-with-jokers'))->cards->map(function($card) {
-                    return [
-                        'card_id' => $card->id,
-                    ];
-                })
-            );
+        $this->current_round = $gameRound->id;
+        $this->save();
 
-            // deal from stock to players
-            foreach(range(1, $round['num_cards']) as $i){
-                foreach($players as $player) {
-                    $gameRound->stock->firstWhere('model_id', null)->location->transitionTo(Hand::class, $player);
-                    $gameRound->refresh();
-                }
+        // generate stock for round
+        $gameRound->stock()->createMany(
+            (new Deck(round($players->count() / 2), 'normal-with-jokers'))->cards->map(function ($card) {
+                return [
+                    'card_id' => $card->id,
+                ];
+            })
+        );
+
+        // deal from stock to players
+        foreach (range(1, $round['num_cards']) as $i) {
+            foreach ($players as $player) {
+                $gameRound->stock->firstWhere('model_id', null)->location->transitionTo(Hand::class, $player);
+                $gameRound->refresh();
             }
         }
+
+        return $gameRound;
     }
 }
