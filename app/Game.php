@@ -42,11 +42,11 @@ class Game extends Model
 
     public function startNextRound()
     {
-        $rounds = $this->game->rounds;
+        $rounds = $this->rounds;
         $currentIndex = 0;
 
         foreach ($rounds as $index => $round) {
-            if ($round->id === $this->game->current_round) {
+            if ($round->id === $this->current_round) {
                 $currentIndex = $index;
                 continue;
             }

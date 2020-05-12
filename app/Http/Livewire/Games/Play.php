@@ -139,22 +139,22 @@ class Play extends Component
             ->where('location', 'hand')
             ->with('card')
             ->get()
-            ->when($this->group, function ($items) {
-                return $items->sortBy('smallCard.suit');
-            })
             ->when($this->sort !== '', function ($items) {
                 if ($this->sort === 'asc') {
                     return $items->sortBy('smallCard.number');
                 } else {
                     return $items->sortByDesc('smallCard.number');
                 }
+            })
+            ->when($this->group, function ($items) {
+                return $items->sortBy('smallCard.suit');
             });
-
-        $hand->sortByDesc('updated_at')->first()->newest = true;
 
         if ($hand->count() === 0 && $this->game->currentRound->has_finished !== true) {
             event(new RoundFinished($this->game->id, auth()->id()));
             $this->setRoundFinishedPause();
+        } else {
+            $hand->sortByDesc('updated_at')->first()->newest = true;
         }
 
         return $hand;
