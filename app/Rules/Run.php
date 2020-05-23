@@ -6,10 +6,13 @@ use Illuminate\Contracts\Validation\Rule;
 
 class Run implements Rule
 {
+    public $message;
+
     public function passes($attribute, $value)
     {
         // Must have at least 4 cards
         if (count($value) < 4) {
+            $this->message = 'A run must have at least four cards.';
             return false;
         }
 
@@ -22,6 +25,7 @@ class Run implements Rule
         // Must be all same suit
         $uniqueSuits = $valueWithOutJokers->pluck('small_card.suit')->unique();
         if ($uniqueSuits->count() > 1) {
+            $this->message = 'All cards in a run must be the same suit.';
             return false;
         }
 
@@ -34,14 +38,24 @@ class Run implements Rule
         $missing = array_diff($orderedValues, $pluckedNumbers->toArray());
 
         if ($jokers->count() > 0) {
+            $numMissing = $jokers->count() - count($missing);
+            $isAre = $numMissing > 1 ? 'are' : 'is';
+            $cards = $numMissing > 1 ? 'cards' : 'card';
+
+            $this->message = "There {$isAre} {$numMissing} {$cards} missing from this run.";
             return $jokers->count() >= count($missing);
         } else {
+            $numMissing = count($missing);
+            $isAre = $numMissing > 1 ? 'are' : 'is';
+            $cards = $numMissing > 1 ? 'cards' : 'card';
+
+            $this->message = "There {$isAre} {$numMissing} {$cards} missing from this run.";
             return count($missing) === 0;
         }
     }
 
     public function message()
     {
-        return 'The validation error message.';
+        return $this->message ?? 'The validation error message.';
     }
 }

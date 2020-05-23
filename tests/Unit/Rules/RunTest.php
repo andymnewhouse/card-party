@@ -38,6 +38,7 @@ class RunTest extends TestCase
         ];
         $v = Validator::make($cards, ['cards' => new Run]);
         $this->assertTrue($v->fails());
+        $this->assertEquals('A run must have at least four cards.', $v->errors()->messages()['cards'][0]);
     }
 
     /** @test */
@@ -65,6 +66,7 @@ class RunTest extends TestCase
         ];
         $v = Validator::make($cards, ['cards' => new Run]);
         $this->assertTrue($v->fails());
+        $this->assertEquals('All cards in a run must be the same suit.', $v->errors()->messages()['cards'][0]);
     }
 
     /** @test */
@@ -92,6 +94,7 @@ class RunTest extends TestCase
         ];
         $v = Validator::make($cards, ['cards' => new Run]);
         $this->assertTrue($v->fails());
+        $this->assertEquals('There are 3 cards missing from this run.', $v->errors()->messages()['cards'][0]);
     }
 
     /** @test */
@@ -135,6 +138,7 @@ class RunTest extends TestCase
         ];
         $v = Validator::make($cards, ['cards' => new Run]);
         $this->assertTrue($v->fails());
+        $this->assertEquals('There are 9 cards missing from this run.', $v->errors()->messages()['cards'][0]);
 
         $cards = [
             'cards' => [
