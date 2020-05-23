@@ -36,6 +36,7 @@ class SetTest extends TestCase
         ];
         $v = Validator::make($cards, ['cards' => new Set]);
         $this->assertTrue($v->fails());
+        $this->assertEquals('A set must have at least three cards.', $v->errors()->messages()['cards'][0]);
     }
 
     /** @test */
@@ -61,6 +62,7 @@ class SetTest extends TestCase
         ];
         $v = Validator::make($cards, ['cards' => new Set]);
         $this->assertTrue($v->fails());
+        $this->assertEquals('A set must have three cards of the same number.', $v->errors()->messages()['cards'][0]);
     }
 
     /** @test */
@@ -86,5 +88,6 @@ class SetTest extends TestCase
         ];
         $v = Validator::make($cards, ['cards' => new Set]);
         $this->assertTrue($v->fails());
+        $this->assertEquals('A set must have three cards of the same number.', $v->errors()->messages()['cards'][0]);
     }
 }
