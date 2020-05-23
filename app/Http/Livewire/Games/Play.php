@@ -9,6 +9,9 @@ use App\Events\HotCardEnded;
 use App\Events\RefreshGame;
 use App\Events\RoundFinished;
 use App\Events\StartNextRound;
+use App\Rules\Run;
+use App\Rules\Set;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -273,12 +276,13 @@ class Play extends Component
     {
         // Validate
         foreach ($this->goals as $index => $goal) {
-            if ($goal['min_cards'] > count($goal['cards'])) {
-                $numMissing = $goal['min_cards'] - count($goal['cards']);
-                $cardString = $numMissing === 1 ? 'card' : 'cards';
-                $goalNumber = strtolower(numToOrdinalWord($index + 1));
-
-                $this->emit('notify', ['message' => "You need {$numMissing} more {$cardString} to complete the {$goalNumber} goal.", 'type' => 'error']);
+            if (Str::contains($goal['label'], 'set')) {
+                $v = Validator::make($goal['cards'], ['cards' => new Set]);
+            } else {
+                $v = Validator::make($goal['cards'], ['cards' => new Run]);
+            }
+            if ($v->fails()) {
+                $this->emit('notify', ['message' => $v->errors()->messages()['cards'][0], 'type' => 'error']);
                 return;
             }
         }
