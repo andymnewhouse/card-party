@@ -38,12 +38,6 @@ class Play extends Component
         $this->game = $game->load('players', 'game_type', 'currentRound');
         $this->gameId = $game->id;
         $this->goals = $game->currentRound->goals->toArray();
-        $this->allowedHandCount = [
-            $game->currentRound->num_cards,
-            $game->currentRound->num_cards + 3,
-            $game->currentRound->num_cards + 6,
-            $game->currentRound->num_cards + 9,
-        ];
     }
 
     public function getListeners()
