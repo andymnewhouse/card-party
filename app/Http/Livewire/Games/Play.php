@@ -156,7 +156,7 @@ class Play extends Component
         if ($hand->count() === 0 && $this->game->currentRound->has_finished !== true) {
             event(new RoundFinished($this->game->id, auth()->id()));
             $this->setRoundFinishedPause();
-        } else {
+        } elseif (! $this->game->currentRound->has_finished) {
             $hand->sortByDesc('updated_at')->first()->newest = true;
         }
 
