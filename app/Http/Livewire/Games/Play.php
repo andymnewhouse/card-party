@@ -159,7 +159,7 @@ class Play extends Component
     {
         $this->pauseGame = false;
         $this->pauseGameReason = null;
-        $this->refreshGame();
+        $this->refreshGame(['message' => 'Refreshed Game after Hot Card']);
     }
 
     public function layDown()
