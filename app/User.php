@@ -58,6 +58,28 @@ class User extends Authenticatable implements MustVerifyEmail
         $friend->friends()->attach($this->id);
     }
 
+    public function getHand($round)
+    {
+        return $round->stock()
+            ->where('model_id', $this->id)
+            ->where('model_type', 'App\User')
+            ->where('location', 'hand')
+            ->with('card')
+            ->get()
+            ->sortBy('order');
+    }
+
+    public function reorderHand($round, $order)
+    {
+        $hand = $this->getHand($round);
+
+        foreach ($order as $item) {
+            $card = $hand->firstWhere('id', $item['value']);
+            $card->order = $item['order'];
+            $card->save();
+        }
+    }
+
     public function removeFriend($friend_id)
     {
         $this->friends()->detach($friend_id);

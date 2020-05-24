@@ -6,6 +6,7 @@ use App\States\Discard;
 use App\States\Hand;
 use App\States\Table;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Round extends Model
 {
@@ -36,6 +37,21 @@ class Round extends Model
     public function activePlayer()
     {
         return $this->belongsTo(User::class, 'active_player_id');
+    }
+
+    public function getGoalsLabelAttribute()
+    {
+        return $this->goals->implode('label', ', ');
+    }
+
+    public function getInstructionsAttribute()
+    {
+        if (! $this->has_started) {
+            return 'Please click the deck to start the game.';
+        } else {
+            $name = Str::before($this->activePlayer->name, ' ');
+            return "It's {$name}'s turn.";
+        }
     }
 
     public function move($from, $to, $stockId = null, $group = null)
