@@ -52,12 +52,8 @@
                     2 ➜ A
                 </button>
                 <button type="button" wire:click="sort('desc')"
-                    class="-ml-px relative group-btn btn-xs rounded-none btn-white {{ $sort === 'desc' ? 'active' : '' }}">
+                    class="-ml-px relative group-btn btn-xs rounded-l-none btn-white {{ $sort === 'desc' ? 'active' : '' }}">
                     A ➜ 2
-                </button>
-                <button type="button" wire:click="toggleGroup"
-                    class="-ml-px relative group-btn btn-xs rounded-l-none btn-white {{ $group ? 'active' : '' }}">
-                    ♠︎♥︎♣︎♦︎
                 </button>
             </span>
         </div>
