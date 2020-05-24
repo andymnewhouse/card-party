@@ -4,12 +4,12 @@
 
     <div class="grid grid-cols-6 gap-4">
         <div class="col-span-5">
-            <div class="hand flex flex-no-wrap">
+            <div class="hand h-40 overflow-x-scroll shadow-inner bg-gray-50 p-2 rounded-lg flex items-end flex-no-wrap focus:outline-none"
+                wire:sortable="sort">
                 @foreach($myHand as $cardIndex => $stock)
                 @if($editMode)
                 @if(in_array($stock->id, array_column($selected, 'id')))
-                <button type="button" wire:click="selectToPlace({{ $stock->id }})" class="card bg-blue-100 -mt-4"
-                    disabled>
+                <button type="button" class="card bg-blue-100 -mt-4" disabled>
                     <x-card :card="$stock->smallCard" />
                 </button>
                 @else
@@ -18,17 +18,17 @@
                 </button>
                 @endif
                 @else
-
-                @isset($stock->newest)
-                <button type="button" wire:click="discard({{ $stock->id }})" class="card bg-blue-gray-100">
-                    <x-card :card="$stock->smallCard" />
-                </button>
-                @else
-                <button type="button" wire:click="discard({{ $stock->id }})" class="card">
-                    <x-card :card="$stock->smallCard" />
-                </button>
-                @endif
-
+                <div wire:sortable.item="{{ $stock->id }}" wire:key="stock-{{ $stock->id }}"
+                    class="sortable rounded-lg relative group flex items-center">
+                    <button type="button" wire:click="discard({{ $stock->id }})"
+                        class="card {{ $stock->newest ? 'bg-blue-gray-100' : '' }}">
+                        <div wire:sortable.handle
+                            class="group-hover:bg-red-300 rounded-t w-full h-4 absolute top-0 left-0 right-0 flex items-center justify-center">
+                            <div class="group-hover:bg-red-600 h-1 w-6 rounded-full"></div>
+                        </div>
+                        <x-card :card="$stock->smallCard" />
+                    </button>
+                </div>
                 @endif
                 @endforeach
             </div>

@@ -63,9 +63,9 @@ class Play extends Component
             'discard' => $this->game->currentRound->stock->where('location', 'discard')->sortBy('updated_at')->reverse(),
             'editMode' => $this->editMode,
             'finishedTabulating' => $this->game->currentRound->scores !== null,
-            'goalsLabel' => $this->getGoalsLabel(),
+            'goalsLabel' => $this->game->currentRound->goalsLabel,
             'iHavePlayed' => $this->game->currentRound->cardGroups->pluck('owner_id')->contains(auth()->id()),
-            'instructions' => $this->getInstructions(),
+            'instructions' => $this->game->currentRound->instructions,
             'myHand' => $this->getMyHand(),
             'needsToDiscard' => $this->game->currentRound->has_pickedup,
             'players' => $this->getPlayersWithCardsInHand($this->game->players),
@@ -113,39 +113,9 @@ class Play extends Component
         }
     }
 
-    public function getGoalsLabel()
-    {
-        return collect($this->goals)->pluck('label')->join(', ');
-    }
-
-    public function getInstructions()
-    {
-        if (! $this->game->currentRound->has_started) {
-            return 'Please click the deck to start the game.';
-        } else {
-            $name = Str::before($this->game->currentRound->activePlayer->name, ' ');
-            return "It is {$name}'s Turn.";
-        }
-    }
-
     public function getMyHand()
     {
-        $hand = $this->game->currentRound->stock()
-            ->where('model_id', auth()->id())
-            ->where('model_type', 'App\User')
-            ->where('location', 'hand')
-            ->with('card')
-            ->get()
-            ->when($this->sort !== '', function ($items) {
-                if ($this->sort === 'asc') {
-                    return $items->sortBy('smallCard.number');
-                } else {
-                    return $items->sortByDesc('smallCard.number');
-                }
-            })
-            ->when($this->group, function ($items) {
-                return $items->sortBy('smallCard.suit');
-            });
+        $hand = auth()->user()->getHand($this->game->currentRound);
 
         if ($hand->count() === 0 && $this->game->currentRound->has_finished !== true) {
             event(new RoundFinished($this->game->id, auth()->id()));
@@ -155,21 +125,6 @@ class Play extends Component
         }
 
         return $hand;
-    }
-
-    public function getNeedsToDiscard($hand)
-    {
-        $hand = count($hand);
-
-        if ($hand > $this->allowedHandCount[0] && $hand < $this->allowedHandCount[1]) {
-            return true;
-        } elseif ($hand > $this->allowedHandCount[1] && $hand < $this->allowedHandCount[2]) {
-            return true;
-        } elseif ($hand > $this->allowedHandCount[2]) {
-            return true;
-        }
-
-        return false;
     }
 
     public function getPlayersWithCardsInHand($players)
@@ -204,7 +159,7 @@ class Play extends Component
     {
         $this->pauseGame = false;
         $this->pauseGameReason = null;
-        $this->refreshGame();
+        $this->refreshGame(['message' => 'Refreshed Game after Hot Card']);
     }
 
     public function layDown()
@@ -334,9 +289,24 @@ class Play extends Component
         $this->pauseGameReason = 'Round is Over';
     }
 
-    public function sort($way)
+    public function sort($newOrder)
     {
-        $this->sort = $way;
+        if (is_string($newOrder)) {
+            if ($newOrder === 'asc') {
+                $sorted = auth()->user()->getHand($this->game->currentRound)->sortBy('smallCard.number');
+            } else {
+                $sorted = auth()->user()->getHand($this->game->currentRound)->sortByDesc('smallCard.number');
+            }
+
+            $newOrder = $sorted->values()->map(function ($item, $key) {
+                return [
+                    'order' => $key + 1,
+                    'value' => $item->id,
+                ];
+            });
+        }
+
+        auth()->user()->reorderHand($this->game->currentRound, $newOrder);
     }
 
     public function start()

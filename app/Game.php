@@ -84,7 +84,10 @@ class Game extends Model
         // deal from stock to players
         foreach (range(1, $round['num_cards']) as $i) {
             foreach ($players as $player) {
-                $gameRound->stock->firstWhere('model_id', null)->location->transitionTo(Hand::class, $player);
+                $stock = $gameRound->stock->firstWhere('model_id', null);
+                $stock->location->transitionTo(Hand::class, $player);
+                $stock->order = $i;
+                $stock->save();
                 $gameRound->refresh();
             }
         }
