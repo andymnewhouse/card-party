@@ -22,34 +22,6 @@ class CardGroup extends Component
 
     public function order($group)
     {
-        if ($group->type === 'set') {
-            return $group->stock->sortBy('small_card.suit')->sortBy('small_card.number');
-        } else {
-            return $group->stock->sortBy('small_card.suit')->sortBy('small_card.number');
-            // list($jokers, $stock) = $group->stock->partition(function ($i) {
-            //     return $i->small_card['value'] === 'joker';
-            // });
-
-            // $cards = $stock->map(function ($item) {
-            //     return $item->small_card;
-            // })->pluck('number')->toArray();
-
-            // $new = collect([]);
-            // foreach (range(min($cards), max($cards)) as $number) {
-            //     if ($stock->firstWhere('small_card.number', $number) !== null) {
-            //         $new[] = $stock->firstWhere('small_card.number', $number);
-            //     } else {
-            //         $new[] = $jokers->pop();
-            //     }
-            // }
-
-            // if ($jokers->count() > 0) {
-            //     $jokers->each(function ($joker) use ($new) {
-            //         $new->prepend($joker);
-            //     });
-            // }
-
-            // return collect($new);
-        }
+        return $group->stock->sortBy('order');
     }
 }
