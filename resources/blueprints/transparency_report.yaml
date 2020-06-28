@@ -1,0 +1,47 @@
+title: 'Transparency Report'
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: month
+        field:
+          mode: single
+          time_enabled: false
+          time_required: false
+          earliest_date: '1900-01-01'
+          full_width: false
+          inline: false
+          columns: 1
+          rows: 1
+          type: date
+          localizable: false
+          listable: hidden
+          display: Month
+      -
+        handle: expenses
+        field:
+          fields:
+            -
+              import: accounting
+          mode: table
+          reorderable: true
+          type: grid
+          localizable: false
+          listable: hidden
+          display: Expenses
+      -
+        handle: income
+        field:
+          fields:
+            -
+              import: accounting
+          mode: table
+          reorderable: true
+          type: grid
+          localizable: false
+          listable: hidden
+          display: Income
+      -
+        handle: bard
+        field: bard.bard

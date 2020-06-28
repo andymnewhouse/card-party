@@ -1,0 +1,23 @@
+title: 'Fullpage Angled'
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: show_nav
+        field:
+          type: toggle
+          localizable: false
+          listable: hidden
+          display: 'Show Nav'
+      -
+        handle: bard
+        field: bard.bard
+      -
+        handle: template
+        field:
+          hide_partials: true
+          type: template
+          localizable: false
+          listable: hidden
+          display: Template

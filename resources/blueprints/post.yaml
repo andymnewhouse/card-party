@@ -1,0 +1,47 @@
+title: Post
+sections:
+  main:
+    display: Main
+    fields:
+      -
+        handle: header
+        field:
+          mode: grid
+          container: assets
+          restrict: false
+          allow_uploads: true
+          max_files: 1
+          type: assets
+          localizable: false
+          listable: hidden
+          display: Header
+          width: 50
+      -
+        handle: height
+        field: height.height
+        config:
+          options:
+            h-64: h-64
+            h-32: h-32
+            h-screen: Screen
+          width: 50
+      -
+        handle: bard
+        field: bard.bard
+      -
+        handle: author
+        field:
+          max_items: 1
+          mode: typeahead
+          type: users
+          localizable: false
+          listable: hidden
+          display: Author
+      -
+        handle: template
+        field:
+          hide_partials: true
+          type: template
+          localizable: false
+          listable: hidden
+          display: Template
