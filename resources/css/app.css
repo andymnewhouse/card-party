@@ -2,14 +2,7 @@
 
 @import "tailwindcss/components";
 
-@import "./components/animate";
-@import "./components/buttons";
-@import "./components/cards";
-@import "./components/forms";
-@import "./components/game";
-@import "./components/nav";
-@import "./components/table";
-@import "./components/typography";
+@import "./components/components";
 
 @import "tailwindcss/utilities";
 
@@ -25,4 +18,20 @@
 
 .draggable-container--is-dragging {
     @apply pl-10;
+}
+
+.card-rotate {
+    transform: rotate(9deg) translateY(-100px) translateX(-350px);
+    
+    @screen lg {
+        transform: rotate(9deg) translateY(-100px) translateX(-100px);
+    }
+}
+
+.card-shadow {
+    background: linear-gradient(to bottom, rgba(61,64,91,1), rgba(255,255,255,0));
+
+    @screen lg {
+        background: linear-gradient(99deg, rgba(61,64,91,1) 0%, rgba(255,255,255,0) 25%)
+    }
 }

@@ -1,0 +1,12 @@
+title: 'Transparency Reports'
+template: marketing/default
+layout: marketing/layout
+blueprints:
+  - transparency_report
+mount: 9ac3e020-d4fa-4b73-8abc-d337dd089815
+revisions: false
+route: '/transparency/{month}'
+sort_dir: asc
+date_behavior:
+  past: public
+  future: private

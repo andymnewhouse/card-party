@@ -1,0 +1,13 @@
+title: Blog
+template: marketing/post
+layout: marketing/layout
+blueprints:
+  - post
+mount: b2f03628-06ff-48e9-bfd6-f24eb7d06095
+revisions: false
+route: '/blog/{slug}'
+date: true
+sort_dir: asc
+date_behavior:
+  past: public
+  future: private
