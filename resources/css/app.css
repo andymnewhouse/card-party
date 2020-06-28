@@ -22,3 +22,7 @@
 .table {
     @apply relative mx-auto w-full h-2/3;
 }
+
+.draggable-container--is-dragging {
+    @apply pl-10;
+}

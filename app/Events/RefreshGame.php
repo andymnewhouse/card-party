@@ -13,10 +13,12 @@ class RefreshGame implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $gameId;
+    public $message;
 
-    public function __construct($gameId)
+    public function __construct($gameId, $message = null)
     {
         $this->gameId = $gameId;
+        $this->message = $message ?? 'Refreshed Game';
     }
 
     public function broadcastOn()

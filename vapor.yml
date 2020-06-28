@@ -1,0 +1,27 @@
+id: 9765
+name: cardparty
+environments:
+    production:
+        memory: 1024
+        cli-memory: 512
+        database: cardparty
+        cache: cardparty
+        runtime: php-7.4
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+            - 'php artisan event:cache'
+        deploy:
+            - 'php artisan migrate --force'
+        domain: app.cardparty.games
+    staging:
+        memory: 1024
+        cli-memory: 512
+        database: cardparty
+        cache: cardparty
+        runtime: php-7.4
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan event:cache'
+        deploy:
+            - 'php artisan migrate --force'
+        domain: staging.cardparty.games

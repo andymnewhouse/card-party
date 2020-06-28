@@ -23,6 +23,7 @@ class Discarded extends Transition
     {
         $this->stock->model()->dissociate($this->user);
         $this->stock->location = new Discard($this->stock);
+        $this->stock->order = null;
         $this->stock->save();
 
         return $this->stock;

@@ -13,10 +13,12 @@ class GameStarted implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $gameId;
+    public $message;
 
-    public function __construct($gameId)
+    public function __construct($gameId, $firstName)
     {
         $this->gameId = $gameId;
+        $this->message = $firstName.' flipped over the top card to start the game.';
     }
 
     public function broadcastOn()

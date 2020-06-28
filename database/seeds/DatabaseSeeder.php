@@ -7,6 +7,5 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UsersSeeder::class);
-        $this->call(MailCoachSeeder::class);
     }
 }
