@@ -108,6 +108,7 @@ class Play extends Component
         $this->game->currentRound->save();
         if ($this->hotCardEditMode) {
             event(new HotCardEnded($this->game->id, auth()->user()->firstName.' discarded after playing a hot card.'));
+            $this->hotCardEndedMode = false;
         } else {
             event(new RefreshGame($this->game->id, auth()->user()->firstName.' discarded.'));
         }
